@@ -1,0 +1,43 @@
+- hosts: jenkins
+  become: true
+  pre_tasks:
+    - name: Update apt
+      ansible.builtin.apt:
+        update_cache: yes
+
+  vars:
+    jenkins_plugins:
+      - workflow-aggregator
+      - pipeline-stage-view
+      - ssh-agent
+      - github
+      - nodejs
+
+  roles:
+    - role: geerlingguy.java
+      when: "ansible_os_family == 'Debian'"
+      java_packages:
+        - openjdk-17-jre
+    - role: geerlingguy.jenkins
+
+  tasks:
+    - name: Warten, bis Jenkins vollständig gestartet ist
+      ansible.builtin.wait_for:
+        path: /var/lib/jenkins/jenkins.install.UpgradeWizard.state
+        timeout: 60
+      when: ansible_os_family == "Debian"
+
+    - name: NodeJS-Plugin konfigurieren (NodeJS 23.8.0 installieren)
+      template:
+        src: templates/jenkins.plugins.nodejs.tools.NodeJSInstallation.xml.j2
+        dest: /var/lib/jenkins/jenkins.plugins.nodejs.tools.NodeJSInstallation.xml
+        owner: jenkins
+        group: jenkins
+        mode: '0644'
+      notify: restart jenkins
+
+  handlers:
+    - name: restart jenkins
+      service:
+        name: jenkins
+        state: restarted

@@ -1,0 +1,164 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: clip; 
+  height: 100%;
+}
+
+.container-fluid {
+  height: 100%;
+  display: flex; /* Flexbox für besseres Layout */
+  flex-direction: row; /* Horizontale Anordnung */
+  transition: background-color 0.3s ease;
+}
+.header-bar {
+  height: 75px; /* Höhe des Headers */
+}
+.main-content {
+  display: flex; /* Flex für die Hauptinhalte */
+  flex-grow: 1; /* Nimmt den verbleibenden Platz ein */
+  gap: 15px; /* Abstand zwischen den Spalten */
+  padding: 15px; /* Padding für die Hauptinhalte */
+}
+
+.sidebar {
+  flex: 0 0 250px; /* Sidebar hat eine feste Breite */
+  height: calc(100vh - 75px);
+}
+.chat-history, .user-display {
+  flex-grow: 1;
+  height: calc(100vh - 125px); /* Gleiche Höhe für beide Boxen */
+}
+
+/* Dunkles Design */
+.dark-mode {
+  background-color: #151515;
+  color: #ffffff;
+}
+
+/* Helles Design */
+.light-mode {
+  background-color: #ffffff;
+  color: #151515;
+}
+
+/* Gemeinsamer Button-Stil */
+.btn-custom {
+  border-radius: 20px;
+  border: none;
+  padding: 5px 15px; /* Weniger Padding für mobile Geräte */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-custom-dark {
+  background-color: #565656;
+  color: #ffffff;
+}
+
+.btn-custom-light {
+  background-color: #eaeaea;
+  color: #565353;
+}
+
+/* Hover-Effekt */
+.btn-custom:hover {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-custom:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%); /* von oben */
+    opacity: 0; /* unsichtbar */
+  }
+  to {
+    transform: translateY(0); /* in die Endposition */
+    opacity: 1; /* sichtbar */
+  }
+}
+
+.slide-in {
+  display: block; 
+  animation: slideIn 2s ease forwards; 
+}
+
+/* Eingabefeld-Stil */
+.input-field {
+  background-color: #eaeaea;
+  border-radius: 20px;
+  padding: 10px; 
+  min-height: 50px; /* Höhe des Eingabefelds */
+  border: none;
+  width: 100%; /* Volle Breite für Eingabefeld */
+  color: #151515; 
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Dunkles Eingabefeld */
+.input-field.dark {
+  background-color: #565656; 
+  color: #ffffff; 
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Media Queries für verschiedene Bildschirmgrößen */
+@media (max-width: 768px) {
+  .container-fluid {
+    flex-direction: column; 
+    /* Vertikale Anordnung auf kleinen Bildschirmen */
+  }
+
+  .sidebar {
+    width: 100%; /* Sidebar passt sich an */
+  }
+
+  .input-field {
+    min-height: 40px; /* Höhe des Eingabefelds auf kleinen Bildschirmen */
+  }
+
+  h3 {
+    font-size: 1.5em; /* Schriftgröße anpassen für kleinere Bildschirme */
+  }
+}
+
+.list-group {
+  width: 100%; /* Volle Breite für die Liste */
+  max-width: none; /* Maximalbreite aufheben */
+}
+
+.list-group-item {
+  transition: background-color 0.3s; /* Sanfter Übergang für den Hintergrund */
+}
+
+.list-group-item:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Hover-Effekt für bessere Benutzererfahrung */
+}
+
+@media (max-width: 768px) {
+  .input-field {
+    font-size: 14px;
+  }
+  
+  .chat-bubble {
+    max-width: 85%; /* Reduziere die maximale Breite für schmalere Bildschirme */
+    font-size: 14px; /* Kleinere Schrift */
+  }
+}
+
+@media (max-width: 480px) {
+  .input-field {
+    font-size: 12px;
+  }
+  
+  .chat-bubble {
+    max-width: 90%; /* Noch breiter auf sehr kleinen Bildschirmen */
+    font-size: 12px; /* Noch kleinere Schrift */
+  }
+}
