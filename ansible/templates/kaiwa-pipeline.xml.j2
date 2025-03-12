@@ -1,0 +1,40 @@
+<flow-definition plugin="workflow-job">
+    <actions/>
+    <description>Pipeline für Kaiwa Chat-App</description>
+    <keepDependencies>false</keepDependencies>
+    <properties>
+        <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.42.0">
+            <projectUrl>https://github.com/marcusBieber/kaiwa-next-level.git</projectUrl>
+        </com.coravy.hudson.plugins.github.GithubProjectProperty>
+        <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+            <triggers>
+                <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.42.0">
+                    <spec></spec>
+                </com.cloudbees.jenkins.GitHubPushTrigger>
+            </triggers>
+        </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+    </properties>
+    <definition class="org.jenkinsci.plugins.workflow.cps.SCMBinder" plugin="workflow-cps">
+        <scm class="hudson.plugins.git.GitSCM" plugin="git">
+            <configVersion>2</configVersion>
+            <userRemoteConfigs>
+                <hudson.plugins.git.UserRemoteConfig>
+                    <url>https://github.com/marcusBieber/kaiwa-next-level.git</url>
+                </hudson.plugins.git.UserRemoteConfig>
+            </userRemoteConfigs>
+            <branches>
+                <hudson.plugins.git.BranchSpec>
+                    <name>*/main</name>
+                </hudson.plugins.git.BranchSpec>
+                <hudson.plugins.git.BranchSpec>
+                    <name>*/dev</name>
+                </hudson.plugins.git.BranchSpec>
+            </branches>
+            <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+            <submoduleCfg class="list"/>
+        </scm>
+        <scriptPath>Jenkinsfile</scriptPath>
+        <lightweight>true</lightweight>
+    </definition>
+    <triggers/>
+</flow-definition>
