@@ -27,6 +27,12 @@
         timeout: 60
       when: ansible_os_family == "Debian"
 
+    - name: Jenkins CLI herunterladen
+      get_url:
+        url: "http://{{ inventory_hostname }}:8080/jnlpJars/jenkins-cli.jar"
+        dest: /tmp/jenkins-cli.jar
+        mode: '0755'
+
     - name: NodeJS-Plugin konfigurieren (NodeJS 23.8.0 installieren)
       template:
         src: templates/jenkins.plugins.nodejs.tools.NodeJSInstallation.xml.j2
@@ -36,58 +42,23 @@
         mode: '0644'
       notify: restart jenkins
 
-    - name: Hole Jenkins-Crumb für Authentifizierung
-      uri:
-        url: "http://{{ inventory_hostname }}:8080/crumbIssuer/api/json"
-        method: GET
-        user: "admin"
-        password: "admin"
-        force_basic_auth: yes
-        return_content: yes
-      register: jenkins_crumb
-
-    - name: Debug Jenkins Crumb Response
-      debug:
-        var: jenkins_crumb.json
-
-    - name: Erstelle API-Token für admin
-      uri:
-        url: "http://{{ inventory_hostname }}:8080/user/admin/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken"
-        method: POST
-        user: "admin"
-        password: "admin"
-        force_basic_auth: yes
-        headers:
-          Content-Type: "application/json"
-          Jenkins-Crumb: "{{ jenkins_crumb.json.crumb }}"
-        body: '{"newTokenName": "ansible-token"}'
-        body_format: json
-        return_content: yes
-      register: jenkins_token_response
-
-    - name: Debug Jenkins Token Response
-      debug:
-        var: jenkins_token_response.json
-
-    - name: Extrahiere API-Token aus der Antwort
-      set_fact:
-        jenkins_api_token: "{{ jenkins_token_response.json.data.tokenValue }}"
-
-    - name: Erstelle einfachen Pipeline-Job für GitHub-Repo
-      uri:
-        url: "http://{{ inventory_hostname }}:8080/createItem?name=Kaiwa-Pipeline"
-        method: POST
-        user: "admin"
-        password: "{{ jenkins_api_token }}"
-        force_basic_auth: yes
-        headers:
-          Content-Type: "application/xml"
-          Jenkins-Crumb: "{{ jenkins_crumb.json.crumb }}"
-        body: "{{ lookup('template', 'templates/kaiwa-pipeline.xml.j2') }}"
-        status_code: [200, 201]
+    - name: Erstelle Pipeline-Job mit Jenkins CLI
+      command: >
+        java -jar /tmp/jenkins-cli.jar -s http://{{ inventory_hostname }}:8080/ -auth admin:admin create-job Kaiwa-Pipeline
+      args:
+        chdir: /tmp
+        stdin: "{{ lookup('file', 'templates/kaiwa-pipeline.xml.j2') }}"
+      when: ansible_os_family == "Debian"
 
   handlers:
     - name: restart jenkins
       service:
         name: jenkins
         state: restarted
+    
+
+    
+
+  
+
+    

@@ -1,0 +1,48 @@
+# Mein Ziel ist es, die gesamte Installation und Konfiguration von Jenkins, bezogen auf dieses Projekt, zu automaitisieren.
+# Auch die Erstellung eines Pipeline-Jobs, der gleich mit dem Repository diesen Projekts verbunden ist, soll automatisiert sein.
+# Mein Versuch, dies mit der Jenkins-Api zu machen, hat nicht funktioniert. Es gelang mir nicht, den für die Erstellung des Jobs
+# benötigten Api-Token über die Jenkins-Api zu generieren.  
+
+# Manueller Ablauf der Befehle um:
+
+# 1. Crumb generieren und in Variablen speichern
+CRUMB=$(curl -u admin:admin http://35.158.97.60:8080/crumbIssuer/api/json | jq -r '.crumb')
+
+# 2. API-Token generieren und in Variablen speichern
+API_TOKEN=$(curl -u admin:admin -X POST http://35.158.97.60:8080/user/admin/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken \
+  -H "Jenkins-Crumb: $CRUMB" \
+  -H "Content-Type: application/json" \
+  -d '{"newTokenName": "cli-token"}' | jq -r '.data.tokenValue')
+
+# 3. Job erstellen
+curl -u admin:$API_TOKEN -X POST http://35.158.97.60:8080/createItem?name=Test-Pipeline \
+  -H "Jenkins-Crumb: $CRUMB" \
+  -H "Content-Type: application/xml" \
+  --data-binary @pipeline.xml
+
+# 4. Job ausführen
+curl -u admin:$API_TOKEN -X POST http://35.158.97.60:8080/job/Test-Pipeline/build \
+  -H "Jenkins-Crumb: $CRUMB"
+
+# 5. Job-Status überprüfen
+curl -u admin:$API_TOKEN http://35.158.97.60:8080/job/Test-Pipeline/lastBuild/api/json | jq
+
+-------------------------------------------------------------------LÖSUNG-------------------------------------------------------------------------
+
+# Die Jenkins-CLI benötigt keinen Api-Token um einen neuen Job zu erstellen.
+# Verwendet werden die Standart-Anmeldedaten, wie sie nach jeder frischen Installation von Jenkins vorhanden sind.
+
+# 1. Jenkins-CLI herunterladen
+wget http://35.158.97.60:8080/jnlpJars/jenkins-cli.jar
+
+# 2. Job erstellen
+java -jar jenkins-cli.jar -s http://35.158.97.60:8080/ -auth admin:admin create-job Test-Pipeline < pipeline.xml
+
+# 3. Job ausführen
+java -jar jenkins-cli.jar -s http://35.158.97.60:8080/ -auth admin:admin build Test-Pipeline
+
+# 4. Job-Status überprüfen
+java -jar jenkins-cli.jar -s http://35.158.97.60:8080/ -auth admin:admin console Test-Pipeline
+
+# 5. Liste der Jenkins-CLI Befehle
+java -jar jenkins-cli.jar -s http://35.158.97.60:8080/ -auth admin:admin help
