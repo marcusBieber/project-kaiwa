@@ -15,19 +15,17 @@ pipeline {
                         echo "Push in die main-Branch erkannt."
                         // Führe Aktionen für die main-Branch aus
                         stage('Main Branch Actions') {
-                            steps {
-                                echo "Starte Build für die main-Branch..."
-                                // Füge hier deine Build-Schritte für die main-Branch hinzu
-                            }
+                            echo "Starte Build für die main-Branch..."
+                            // Füge hier deine Build-Schritte für die main-Branch hinzu
+                            sh 'echo "Führe Build-Schritte für die main-Branch aus..."'
                         }
                     } else if (env.GIT_BRANCH == 'origin/dev') {
                         echo "Push in die dev-Branch erkannt."
                         // Führe Aktionen für die dev-Branch aus
                         stage('Dev Branch Actions') {
-                            steps {
-                                echo "Starte Build für die dev-Branch..."
-                                // Füge hier deine Build-Schritte für die dev-Branch hinzu
-                            }
+                            echo "Starte Build für die dev-Branch..."
+                            // Füge hier deine Build-Schritte für die dev-Branch hinzu
+                            sh 'echo "Führe Build-Schritte für die dev-Branch aus..."'
                         }
                     } else {
                         echo "Push in eine unbekannte Branch erkannt: ${env.GIT_BRANCH}"
