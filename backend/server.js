@@ -3,10 +3,12 @@ import { createServer } from "node:http";
 import { Server } from "socket.io";
 import cors from "cors";
 import { addChatMessage, getChatMessages, } from "./database/database.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const server = createServer(app);
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());

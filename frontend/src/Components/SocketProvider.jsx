@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import io from "socket.io-client";
 
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000' : '/api';
+
 // "Container" für die Socket-Verbindung
 const SocketContext = createContext();
 
@@ -18,9 +20,9 @@ export const useSocket = () => useContext(SocketContext);
 export const SocketProvider = ({ children, username }) => {
   const [socket, setSocket] = useState(null);
   const socketRef = useRef(null);
-
+  
   useEffect(() => {
-    socketRef.current = io("http://localhost:3000");
+    socketRef.current = io(API_URL);
 
     // Verbindung herstellen und im Custom-Hook speichern
     socketRef.current.on("connect", () => {
