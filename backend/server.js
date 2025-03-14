@@ -19,6 +19,7 @@ const io = new Server(server, {
     origin: "*",
     methods: ["GET", "POST"],
   },
+  transports: ["websocket", "polling"],
 });
 
 // Liste der angemeldeten Benutzer
@@ -74,6 +75,6 @@ app.get("/chat", async (req, res) => {
   }
 });
 
-server.listen(port, () => {
+server.listen(port, "0.0.0.0", () => {
   console.log(`Server läuft auf http://localhost:${port}`);
 });
