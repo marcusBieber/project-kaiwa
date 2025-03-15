@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import io from "socket.io-client";
 
-const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000' : window.location.origin + '/api';
+const SOCKET_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000' : window.location.origin;
 
 // "Container" für die Socket-Verbindung
 const SocketContext = createContext();
@@ -22,7 +22,7 @@ export const SocketProvider = ({ children, username }) => {
   const socketRef = useRef(null);
   
   useEffect(() => {
-    socketRef.current = io(API_URL, { transports: ["websocket", "polling"] });
+    socketRef.current = io(SOCKET_URL, { transports: ["websocket", "polling"] });
 
     // Verbindung herstellen und im Custom-Hook speichern
     socketRef.current.on("connect", () => {
