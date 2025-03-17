@@ -77,10 +77,7 @@ pipeline {
                 
                                 scp -o StrictHostKeyChecking=no -r backend/database backend/server.js backend/package.json ${EC2_USER}@${EC2_HOST}:${BACKEND_PATH}
 
-                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOT'
-                                    export NVM_DIR="$HOME/.nvm"
-                                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                                    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} '
 
                                     cd ${BACKEND_PATH}/database && npm install
                                     cd ${BACKEND_PATH} && npm install
@@ -89,8 +86,7 @@ pipeline {
                                         sudo npm install -g pm2
                                     fi
 
-                                    pm2 start server.js --name "${APP_NAME}-backend"
-                                EOT
+                                    pm2 start server.js --name "${APP_NAME}-backend"'
                             """
                         }
                     }               
