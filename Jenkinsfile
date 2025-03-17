@@ -45,7 +45,7 @@ pipeline {
                             // Clone Repository
                             stage("Clone Repository") {
                                 steps {
-                                    git branch: "dev", 
+                                    git branch: "main", 
                                         url: "https://github.com/marcusBieber/kaiwa-next-level.git" // Repository für Deployment
                                 }
                             }
