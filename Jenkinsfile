@@ -78,7 +78,7 @@ pipeline {
 
                                 scp -o StrictHostKeyChecking=no -r backend/database backend/server.js backend/package.json ${EC2_USER}@${EC2_HOST}:${BACKEND_PATH}
 
-                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} <<EOF > /dev/null 2>&1
+                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} <<EOF > /dev/null 
                                     export NVM_DIR="\$HOME/.nvm"
                                     [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
                                     [ -s "\$NVM_DIR/bash_completion" ] && . "\$NVM_DIR/bash_completion"
