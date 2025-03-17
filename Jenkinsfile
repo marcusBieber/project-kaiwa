@@ -74,32 +74,28 @@ pipeline {
                                     sudo mkdir -p ${BACKEND_PATH} &&
                                     sudo chown -R ubuntu:ubuntu ${BACKEND_PATH} &&
                                     sudo rm -rf ${BACKEND_PATH}/*'
-                                
-                                scp -o StrictHostKeyChecking=no -r backend/* ${EC2_USER}@${EC2_HOST}:${BACKEND_PATH}
+                
+                                scp -o StrictHostKeyChecking=no -r backend/database backend/server.js backend/package.json ${EC2_USER}@${EC2_HOST}:${BACKEND_PATH}
 
-                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << EOF
-    which npm
-    whoami
-    ls -lah /usr/local/bin/npm
-    echo "PATH=\$PATH"
-    cd ${BACKEND_PATH}/database
-    npm install
-EOF
+                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOT'
+                                    export NVM_DIR="$HOME/.nvm"
+                                    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                                    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} '
-                                    cd ${BACKEND_PATH}/database &&
-                                    npm install &&
-                                    cd .. &&
-                                    npm install &&
+                                    cd ${BACKEND_PATH}/database && npm install
+                                    cd ${BACKEND_PATH} && npm install
+
                                     if ! command -v pm2 &> /dev/null; then
                                         sudo npm install -g pm2
-                                    fi &&
-                                    pm2 start server.js --name "${APP_NAME}-backend"'
+                                    fi
+
+                                    pm2 start server.js --name "${APP_NAME}-backend"
+                                EOT
                             """
                         }
-                    }
+                    }               
                 }
-
+                
                 stage("Deploy Frontend to EC2") {
                     steps {
                         sshagent(credentials: [SSH_CREDENTIALS]) {
