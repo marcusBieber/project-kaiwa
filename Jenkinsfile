@@ -82,9 +82,8 @@ pipeline {
                                     export NVM_DIR="\$HOME/.nvm"
                                     [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
                                     [ -s "\$NVM_DIR/bash_completion" ] && . "\$NVM_DIR/bash_completion"
-                                EOF
+                                    nvm use v22.14.0
 
-                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} '
                                     cd ${BACKEND_PATH}/database && npm install
                                     cd ${BACKEND_PATH} && npm install
 
@@ -93,7 +92,7 @@ pipeline {
                                     fi
 
                                     pm2 start server.js --name "${APP_NAME}-backend"
-                                '
+                                EOF
                             """
                         }
                     }               
