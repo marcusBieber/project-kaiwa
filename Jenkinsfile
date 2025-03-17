@@ -92,7 +92,7 @@ pipeline {
                                     fi
 
                                     pm2 start server.js --name "${APP_NAME}-backend"
-                                EOF
+EOF
                             """
                         }
                     }               
