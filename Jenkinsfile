@@ -87,7 +87,7 @@ pipeline {
                                         sudo npm install -g pm2
                                     fi
 
-                                    pm2 start server.js --name "${APP_NAME}-backend"
+                                    pm2 restart "${APP_NAME}-backend" || pm2 start server.js --name "${APP_NAME}-backend" --watch
                                 '
                             """
                         }
