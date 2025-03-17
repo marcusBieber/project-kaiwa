@@ -77,12 +77,12 @@ pipeline {
                                 
                                 scp -o StrictHostKeyChecking=no -r backend/* ${EC2_USER}@${EC2_HOST}:${BACKEND_PATH}
 
-                                ssh ubuntu@35.159.82.66 << EOF
+                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << EOF
     which npm
     whoami
     ls -lah /usr/local/bin/npm
     echo "PATH=\$PATH"
-    cd /var/www/kaiwa-backend/database
+    cd ${BACKEND_PATH}/database
     npm install
 EOF
 
