@@ -12,7 +12,7 @@ pipeline {
     environment {
         GIT_BRANCH = "${params.TARGET_BRANCH != "none" ? params.TARGET_BRANCH : env.GIT_BRANCH}"
         EC2_USER = "ubuntu"
-        EC2_HOST = "35.159.66.99" // EC2-IP anpassen
+        EC2_HOST = "35.159.82.66" // EC2-IP anpassen
         APP_URL = "http://${EC2_HOST}"  // Dynamische URL basierend auf EC2_HOST
         APP_NAME = "kaiwa"  // Name der Anwendung
         DEPLOY_PATH = "/var/www/${APP_NAME}-fontend" // Nginx-Standardverzeichnis
