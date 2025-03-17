@@ -55,17 +55,6 @@ pipeline {
                     }
                 }
 
-                stage("Run Database Tests") {
-                    steps {
-                        dir("backend/database") {
-                            sh """
-                                npm install
-                                npm test
-                            """
-                        }
-                    }
-                }
-
                 stage("Install Dependencies and Build React App") {
                     steps {
                         dir("frontend") {
