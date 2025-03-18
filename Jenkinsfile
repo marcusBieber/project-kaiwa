@@ -73,8 +73,7 @@ pipeline {
                                 ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} '
                                     sudo mkdir -p ${BACKEND_PATH} &&
                                     sudo chown -R ubuntu:ubuntu ${BACKEND_PATH} &&
-                                    touch ${BACKEND_PATH}/killerror.file &&
-                                    sudo find ${BACKEND_PATH}/* -mindepth 1 ! -name "database.db" -exec rm -rf {} +
+                                    sudo rm -rf ${BACKEND_PATH}/database ${BACKEND_PATH}/node_modules ${BACKEND_PATH}/server.js ${BACKEND_PATH}/package.json
                                 '
 
                                 scp -o StrictHostKeyChecking=no -r backend/database backend/server.js backend/package.json ${EC2_USER}@${EC2_HOST}:${BACKEND_PATH}
