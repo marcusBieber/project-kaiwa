@@ -1,4 +1,5 @@
-- hosts: jenkins
+- name: Jenkins installieren und konfigurieren
+  hosts: jenkins
   become: true
   pre_tasks:
     - name: Update apt

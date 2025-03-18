@@ -12,7 +12,7 @@ pipeline {
     environment {
         GIT_BRANCH = "${params.TARGET_BRANCH != 'none' ? params.TARGET_BRANCH : env.GIT_BRANCH}"
         EC2_USER = "ubuntu"
-        EC2_HOST = "35.159.82.66"
+        EC2_HOST = "3.75.226.81"
         APP_URL = "http://${EC2_HOST}"
         APP_NAME = "kaiwa"
         DEPLOY_PATH = "/var/www/${APP_NAME}-frontend"
@@ -73,7 +73,7 @@ pipeline {
                                 ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} '
                                     sudo mkdir -p ${BACKEND_PATH} &&
                                     sudo chown -R ubuntu:ubuntu ${BACKEND_PATH} &&
-                                    sudo rm -rf ${BACKEND_PATH}/*
+                                    sudo find ${BACKEND_PATH}/* -mindepth 1 ! -name "database.db" -exec rm -rf {} +
                                 '
 
                                 scp -o StrictHostKeyChecking=no -r backend/database backend/server.js backend/package.json ${EC2_USER}@${EC2_HOST}:${BACKEND_PATH}
@@ -83,11 +83,9 @@ pipeline {
                                     cd ${BACKEND_PATH}/database && npm install
                                     cd ${BACKEND_PATH} && npm install
 
-                                    if ! command -v pm2 &> /dev/null; then
-                                        sudo npm install -g pm2
-                                    fi
-
                                     pm2 restart "${APP_NAME}-backend" || pm2 start server.js --name "${APP_NAME}-backend" --watch
+                                    pm2 startup systemd -u ubuntu --hp /home/ubuntu
+                                    pm2 save
                                 '
                             """
                         }
@@ -99,14 +97,6 @@ pipeline {
                         sshagent(credentials: [SSH_CREDENTIALS]) {
                             sh """
                                 ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} '
-                                    if ! command -v nginx &> /dev/null; then
-                                        sudo apt update &&
-                                        sudo apt install -y nginx &&
-                                        sudo systemctl enable nginx &&
-                                        sudo systemctl start nginx &&
-                                        sudo rm -f /etc/nginx/sites-enabled/default
-                                    fi &&
-                                    
                                     sudo mkdir -p ${DEPLOY_PATH} &&
                                     sudo chown -R ubuntu:ubuntu ${DEPLOY_PATH} &&
                                     sudo rm -rf ${DEPLOY_PATH}/*'

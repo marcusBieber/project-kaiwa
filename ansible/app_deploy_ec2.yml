@@ -1,0 +1,29 @@
+- name: Server für App-Deployment konfigurieren
+  hosts: app_deploy_ec2
+  become: true
+  pre_tasks:
+    - name: Update apt
+      ansible.builtin.apt:
+        update_cache: yes
+
+  tasks:
+    - name: Nginx installieren
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+
+    - name: Nginx aktivieren und starten
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: NodeJS und npm installieren
+      ansible.builtin.shell:
+        cmd: |
+          curl -sL https://deb.nodesource.com/setup_20.x | bash -
+          apt-get install -y nodejs
+
+    - name: PM2 installieren
+      ansible.builtin.shell:
+        cmd: npm install pm2 -g
