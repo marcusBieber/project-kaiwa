@@ -84,7 +84,6 @@ pipeline {
                                     cd ${BACKEND_PATH} && npm install
 
                                     pm2 restart "${APP_NAME}-backend" || pm2 start server.js --name "${APP_NAME}-backend" --watch
-                                    pm2 startup systemd -u ubuntu --hp /home/ubuntu
                                     pm2 save
                                 '
                             """

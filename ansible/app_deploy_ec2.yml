@@ -27,3 +27,9 @@
     - name: PM2 installieren
       ansible.builtin.shell:
         cmd: npm install pm2 -g
+
+    - name: PM2 als Service einrichten
+      ansible.builtin.shell:
+        cmd: |
+          pm2 startup systemd
+          env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
