@@ -73,6 +73,7 @@ pipeline {
                                 ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} '
                                     sudo mkdir -p ${BACKEND_PATH} &&
                                     sudo chown -R ubuntu:ubuntu ${BACKEND_PATH} &&
+                                    touch ${BACKEND_PATH}/killerror.file &&
                                     sudo find ${BACKEND_PATH}/* -mindepth 1 ! -name "database.db" -exec rm -rf {} +
                                 '
 
