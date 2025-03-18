@@ -139,6 +139,7 @@ server {
     error_page 404 /index.html;
 }
 EOT
+                                    sudo rm -f /etc/nginx/sites-enabled/default &&
                                     sudo ln -sf /etc/nginx/sites-available/${APP_NAME} /etc/nginx/sites-enabled/${APP_NAME} &&
                                     sudo systemctl restart nginx'
                             """
