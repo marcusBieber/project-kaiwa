@@ -33,3 +33,10 @@
         cmd: |
           pm2 startup systemd
           env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
+        notify: Instanz neustarten
+
+  handlers:
+    - name: Instanz neustarten
+      service:
+        name: app_deploy_ec2
+        state: restarted
