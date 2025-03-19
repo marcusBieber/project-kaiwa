@@ -75,6 +75,8 @@ app.get("/chat", async (req, res) => {
   }
 });
 
-server.listen(port, "0.0.0.0", () => {
+const serverInstance = server.listen(port, "0.0.0.0", () => {
   console.log(`Server läuft auf http://localhost:${port}`);
 });
+
+export { serverInstance, app, io };

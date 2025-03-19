@@ -82,6 +82,7 @@ export function deleteChatMessage(chatmessageid) {
 
 // Reset the database contents
 export function resetDatabase() {
+    console.log("Resetting database...");
     return new Promise((resolve, reject) => {
         db.serialize(() => {
             db.run(`BEGIN TRANSACTION`, (err) => {

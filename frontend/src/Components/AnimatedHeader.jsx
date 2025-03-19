@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "./kaiwa-removebg-preview (3).png";
+import logo from "./kaiwaRemovebgPreview.png";
 
 const AnimatedHeader = () => {
   const [showHeader, setShowHeader] = useState(false);

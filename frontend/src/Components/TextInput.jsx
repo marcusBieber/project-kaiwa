@@ -1,7 +1,6 @@
 import { ColorContext } from "./ColorSwitcher";
 import { useState, useContext, useRef, useEffect } from "react";
 import { useSocket } from "./SocketProvider";
-import "../App.css";
 import CustomButton from "./CustomButton";
 
 function TextInput({ username }) {

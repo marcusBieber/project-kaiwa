@@ -1,5 +1,4 @@
-const database = require('./database');
-const { addChatMessage, getChatMessages, resetDatabase } = database;
+import { addChatMessage, getChatMessages, resetDatabase, deleteChatMessage } from "./database.js";
 
 // This will run before each test
 beforeEach(async () => {
@@ -7,11 +6,11 @@ beforeEach(async () => {
 });
 
 // Test if we can add a chat message
-test('addChatMessage', async () => {    
+test("addChatMessage", async () => {
     const text = "test message";
     
-    await addChatMessage("testuser", text, Date.now(), new Date().toISOString()); // Wait for the chat message to be added
-    const chatMessages = await getChatMessages(); // Wait for chat messages to be fetched
+    await addChatMessage("testuser", text, Date.now(), new Date().toISOString());
+    const chatMessages = await getChatMessages();
     
     expect(chatMessages.length).toBe(1);
     expect(chatMessages[0].username).toBe("testuser");
@@ -19,15 +18,15 @@ test('addChatMessage', async () => {
 });
 
 // Test if we can delete a single chat message
-test('deleteChatMessage', async () => {
+test("deleteChatMessage", async () => {
     const text = "test message";
-    await database.addChatMessage("testuser", text, Date.now(), new Date().toISOString()); // Wait for the chat message to be added
-    
-    let chatMessages = await database.getChatMessages(); // Wait for chat messages to be fetched
+    await addChatMessage("testuser", text, Date.now(), new Date().toISOString());
+
+    let chatMessages = await getChatMessages();
     const chatmessageid = chatMessages[0].id;
     
-    await database.deleteChatMessage(chatmessageid); // Wait for the chat message to be deleted
-    chatMessages = await database.getChatMessages(); // Wait for chat messages to be fetched
+    await deleteChatMessage(chatmessageid);
+    chatMessages = await getChatMessages();
     
     expect(chatMessages.length).toBe(0);
-})
+});
