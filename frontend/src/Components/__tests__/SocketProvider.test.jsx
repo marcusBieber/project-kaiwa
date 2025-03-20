@@ -1,9 +1,9 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { SocketProvider, useSocket } from '../SocketProvider';
-import io from 'socket.io-client';
+import { render, screen, waitFor } from "@testing-library/react";
+import { SocketProvider, useSocket } from "../SocketProvider";
+import io from "socket.io-client";
 
 // Mock von socket.io-client
-jest.mock('socket.io-client', () => {
+jest.mock("socket.io-client", () => {
   return jest.fn().mockImplementation(() => ({
     on: jest.fn(),
     emit: jest.fn(),
@@ -11,14 +11,14 @@ jest.mock('socket.io-client', () => {
   }));
 });
 
-describe('SocketProvider', () => {
-  it('stellt eine Verbindung her und sendet den Benutzernamen', async () => {
-    const username = 'TestUser';
+describe("SocketProvider", () => {
+  it("stellt eine Verbindung her und sendet den Benutzernamen", async () => {
+    const username = "TestUser";
 
     // Wrapper-Komponente, um den Context zu testen
     const Wrapper = () => {
       const socket = useSocket();
-      return <div>{socket ? 'connected' : 'not connected'}</div>;
+      return <div>{socket ? "connected" : "not connected"}</div>;
     };
 
     // Komponente rendern und den SocketProvider einbinden
@@ -31,19 +31,21 @@ describe('SocketProvider', () => {
     // Warten, bis die Verbindung hergestellt ist
     await waitFor(() => {
       // Überprüfen, ob die Verbindung hergestellt wurde (d.h. 'connected' wird angezeigt)
-      expect(screen.getByText('connected')).toBeInTheDocument();
+      expect(screen.getByText("Verbindung hergestellt!")).toBeInTheDocument();
     });
 
     // Überprüfen, ob der Benutzernamen über den Socket gesendet wurde
-    expect(io().emit).toHaveBeenCalledWith('set_username', username);
+    expect(io().emit).toHaveBeenCalledWith("set_username", username);
   });
 
-  it('trennt die Verbindung beim Unmounten', async () => {
-    const username = 'TestUser';
+  it("trennt die Verbindung beim Unmounten", async () => {
+    const username = "TestUser";
 
     const Wrapper = () => {
       const socket = useSocket();
-      return <div>{socket ? 'connected' : 'not connected'}</div>;
+      return (
+        <div>{socket ? "Verbindung hergestellt!" : "Verbindungsfehler"}</div>
+      );
     };
 
     const { unmount } = render(
@@ -53,7 +55,9 @@ describe('SocketProvider', () => {
     );
 
     // Verbindungsaufbau abwarten
-    await waitFor(() => expect(screen.getByText('connected')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText("Verbindung hergestellt!")).toBeInTheDocument()
+    );
 
     // Unmount der Komponente
     unmount();
