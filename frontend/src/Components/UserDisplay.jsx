@@ -10,11 +10,12 @@ function UserDisplay() {
   // Benutzerliste vom Server empfangen, zum Rendern im State speichern
   // und bei jedem An- und Abmelden aktualisieren
   useEffect(() => {
-    if (socket) {
+    if (!socket) return;
+      console.log("alter Benutzerliste:"+ users);
       socket.on("update_user", (users) => {
+        console.log("neue Benutzerliste:"+ users);
         setUsers(users);
       });
-    }
   }, [socket]);
 
   return (

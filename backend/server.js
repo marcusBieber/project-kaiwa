@@ -36,7 +36,8 @@ io.on("connection", (socket) => {
     users.push(username);
     console.log(`${username} hat sich angemeldet!`);
     // Benutzerliste über das "update_user"-Event ins Frontend senden
-    io.emit("update_user", users);
+    setTimeout(() => {
+    io.emit("update_user", users);}, 1000);
   });
 
   // Daten über das "send_message"-Event aus dem Frontend empfangen

@@ -12,7 +12,7 @@ import { useContext,useEffect, useRef, useState } from "react";
 import { SocketProvider } from "./Components/SocketProvider";
 import Login from "./Components/Login";
 import LogOff from "./Components/LogOff";
-import logo from "./Components/kaiwa-Logo.png"
+import logo from "./Components/kaiwaLogo.png"
 
 function App() {
   const [username, setUsername] = useState("");

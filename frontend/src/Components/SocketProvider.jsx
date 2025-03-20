@@ -22,6 +22,7 @@ export const SocketProvider = ({ children, username }) => {
   const socketRef = useRef(null);
   
   useEffect(() => {
+    if (socketRef.current) return;
     socketRef.current = io(SOCKET_URL, { transports: ["websocket", "polling"] });
 
     // Verbindung herstellen und im Custom-Hook speichern
@@ -36,9 +37,12 @@ export const SocketProvider = ({ children, username }) => {
       console.error(`Verbindungsfehler: ${err.message}`);
     });
     // trennen der Verbindung wenn Komponente "unmounted" wird
-    return () => {
-      socketRef.current.disconnect();
-    };
+    //return () => {
+      //if (socketRef.current) {
+        //socketRef.current.disconnect();
+        //socketRef.current = null;
+      //}
+    //};
   }, []);
 
   return (
