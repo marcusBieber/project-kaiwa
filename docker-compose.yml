@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - backend_data:/app/database
+    networks:
+      - app_network
+    environment:
+      - DATABASE_PATH=/app/database/database.db
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app_network
+    environment:
+      - VITE_BACKEND_URL=http://backend:3000
+
+volumes:
+  backend_data:
+
+networks:
+  app_network:

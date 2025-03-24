@@ -1,0 +1,13 @@
+node_modules
+.babelrc
+database.db
+*config.js
+*lock.json
+server.test.js
+
+database/node_modules
+database/database.db
+database/*config.js
+database/database.test.js
+database/LICENCE
+database/*lock.json
