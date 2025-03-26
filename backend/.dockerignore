@@ -11,3 +11,5 @@ database/*config.js
 database/database.test.js
 database/LICENCE
 database/*lock.json
+
+__tests__/

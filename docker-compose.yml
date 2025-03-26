@@ -3,15 +3,15 @@ version: '3.8'
 services:
   backend:
     build: ./backend
-    container_name: backend
+    container_name: kaiwa-backend
     ports:
       - "3000:3000"
     volumes:
-      - backend_data:/app/database
+      - backend_data:/backend/database
     networks:
       - app_network
     environment:
-      - DATABASE_PATH=/app/database/database.db
+      - DATABASE_PATH=/backend/database/database.db
 
   frontend:
     build: ./frontend

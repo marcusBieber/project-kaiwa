@@ -2,7 +2,7 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import cors from "cors";
-import { addChatMessage, getChatMessages, } from "./database/database.js";
+import { addChatMessage, getChatMessages } from "./database.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -37,15 +37,21 @@ io.on("connection", (socket) => {
     console.log(`${username} hat sich angemeldet!`);
     // Benutzerliste über das "update_user"-Event ins Frontend senden
     setTimeout(() => {
-    io.emit("update_user", users);}, 1000);
+      io.emit("update_user", users);
+    }, 1000);
   });
 
   // Daten über das "send_message"-Event aus dem Frontend empfangen
-  socket.on("send_message", async(messageData) => {
+  socket.on("send_message", async (messageData) => {
     console.log(`Nachricht von ${socket.username}:`, messageData);
     try {
       // Add the chat message to the database
-      await addChatMessage(messageData.user, messageData.text, messageData.id, messageData.timestamp);
+      await addChatMessage(
+        messageData.user,
+        messageData.text,
+        messageData.id,
+        messageData.timestamp
+      );
       console.log("Message added to database");
       // Broadcast the message to other clients
     } catch (error) {
@@ -64,7 +70,7 @@ io.on("connection", (socket) => {
     }
   });
 });
-    
+
 // Get chat messages from the database
 app.get("/chat", async (req, res) => {
   try {

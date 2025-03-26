@@ -1,6 +1,6 @@
 import sqlite3 from "sqlite3";
 
-const dbFile = "./database.db";
+const dbFile = "./database/database.db";
 
 function initializeDatabase() {
     const db = new sqlite3.Database(dbFile, (err) => {

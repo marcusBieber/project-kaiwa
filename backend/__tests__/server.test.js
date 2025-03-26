@@ -1,6 +1,6 @@
 import request from "supertest";
 import { io as Client } from "socket.io-client";
-import { serverInstance, app, io } from "./server.js";
+import { serverInstance, app, io } from "../server.js";
 
 const TEST_USER = "TestUser";
 
