@@ -18,6 +18,10 @@ pipeline {
         DEPLOY_PATH = "/var/www/${APP_NAME}-frontend"
         BACKEND_PATH = "/var/www/${APP_NAME}-backend"
         SSH_CREDENTIALS = "jenkins-ec2-key"
+        DOCKERHUB_CREDENTIALS = "dockerhub"
+        DOCKERHUB_USERNAME = "marcusbieber384"
+        DOCKERHUB_REPOSITORY = "${DOCKERHUB_USERNAME}/${APP_NAME}" // + -backend/-frontend
+        IMAGE_TAG = "Latest"
     }
 
     tools {
@@ -37,9 +41,45 @@ pipeline {
             when {
                 expression { env.GIT_BRANCH == "origin/main" || env.GIT_BRANCH == "main" }
             }
-            steps {
-                echo "Starte Build für die main-Branch..."
-                sh "echo 'Führe Build-Schritte für die main-Branch aus...'"
+            stages {
+                stage("Clone Repository") {
+                    steps {
+                        git branch: "main",
+                            url: "https://github.com/marcusBieber/kaiwa-next-level.git"
+                    }
+                }
+
+                stage("Build Backend Image") {
+                    steps {
+                        dir("backend") {
+                            sh """
+                                docker build -t ${DOCKERHUB_REPOSITORY}-backend:${IMAGE_TAG} .
+                            """
+                        }
+                    }
+                }
+
+                stage("Build Frontend Image") {
+                    steps {
+                        dir("frontend") {
+                            sh """
+                                docker build -t ${DOCKERHUB_REPOSITORY}-frontend:${IMAGE_TAG} .
+                            """
+                        }
+                    }
+                }
+
+                stage("Push Images to Docker Hub") {
+                    steps {
+                        withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            sh """
+                                echo \${PASSWORD} | docker login -u \${USERNAME} --password-stdin
+                                docker push ${DOCKERHUB_REPOSITORY}-backend:${IMAGE_TAG}
+                                docker push ${DOCKERHUB_REPOSITORY}-frontend:${IMAGE_TAG}
+                            """
+                        }
+                    }
+                }
             }
         }
 

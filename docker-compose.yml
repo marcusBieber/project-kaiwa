@@ -23,7 +23,7 @@ services:
     networks:
       - app_network
     environment:
-      - VITE_BACKEND_URL=http://backend:3000
+      - VITE_BACKEND_URL=http://kaiwabackend:3000
 
 volumes:
   backend_data:
