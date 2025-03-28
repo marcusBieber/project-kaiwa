@@ -4,7 +4,8 @@ WORKDIR /kaiwa-frontend
 
 COPY package.json ./
 
-RUN npm install
+RUN apk add --no-cache --virtual .build-deps python3 make g++ \
+    && npm install --omit=dev 
 
 COPY . .
 

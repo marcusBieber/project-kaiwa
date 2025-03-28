@@ -12,7 +12,7 @@ pipeline {
     environment {
         GIT_BRANCH = "${params.TARGET_BRANCH != 'none' ? params.TARGET_BRANCH : env.GIT_BRANCH}"
         EC2_USER = "ubuntu"
-        EC2_HOST = "3.71.255.66"
+        EC2_HOST = "33.74.150.142"
         APP_URL = "http://${EC2_HOST}"
         APP_NAME = "kaiwa"
         DEPLOY_PATH = "/var/www/${APP_NAME}-frontend"
