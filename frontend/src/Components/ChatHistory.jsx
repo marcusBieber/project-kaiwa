@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ColorContext } from "./ColorSwitcher";
 import { useSocket } from "./SocketProvider";
 
-const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000' : window.location.origin + '/api';
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3001' : window.location.origin + '/api';
 function ChatHistory({ username }) {
   const { darkMode } = useContext(ColorContext);
   const [messages, setMessages] = useState([]);

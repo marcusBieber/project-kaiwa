@@ -7,26 +7,26 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - backend_data:/backend/database
+      - kaiwa_db_data:/backend/database
     networks:
-      - app_network
+      - kaiwa_app_network
     environment:
       - DATABASE_PATH=/backend/database/database.db
 
   frontend:
     build: ./frontend
-    container_name: frontend
+    container_name: kaiwa-frontend
     ports:
       - "80:80"
     depends_on:
-      - backend
+      - kaiwa-backend
     networks:
-      - app_network
+      - kaiwa_app_network
     environment:
-      - VITE_BACKEND_URL=http://kaiwabackend:3000
+      - BACKEND_URL=http://kaiwa-backend:3001
 
 volumes:
-  backend_data:
+  kaiwa_db_data:
 
 networks:
-  app_network:
+  kaiwa_app_network:

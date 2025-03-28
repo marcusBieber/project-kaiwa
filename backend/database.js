@@ -1,6 +1,15 @@
 import sqlite3 from "sqlite3";
+import fs from "fs";
+import path from "path";
 
-const dbFile = "./database/database.db";
+const dbDir = "./database";
+const dbFile = path.join(dbDir, "database.db");
+
+// database Ornder erstellen wenn er nicht existiert
+if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir);
+    console.log(`Ordner ${dbDir} erstellt.`);
+}
 
 function initializeDatabase() {
     const db = new sqlite3.Database(dbFile, (err) => {

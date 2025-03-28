@@ -12,7 +12,7 @@ pipeline {
     environment {
         GIT_BRANCH = "${params.TARGET_BRANCH != 'none' ? params.TARGET_BRANCH : env.GIT_BRANCH}"
         EC2_USER = "ubuntu"
-        EC2_HOST = "18.185.66.31"
+        EC2_HOST = "3.71.255.66"
         APP_URL = "http://${EC2_HOST}"
         APP_NAME = "kaiwa"
         DEPLOY_PATH = "/var/www/${APP_NAME}-frontend"
@@ -155,7 +155,7 @@ server {
     }
 
     location /api/ {
-        proxy_pass http://localhost:3000/;
+        proxy_pass http://localhost:3001/;
         proxy_http_version 1.1;
         proxy_set_header Host \\\$host;
         proxy_set_header X-Real-IP \\\$remote_addr;
@@ -164,7 +164,7 @@ server {
     }
 
     location /socket.io/ {
-        proxy_pass http://localhost:3000/socket.io/;
+        proxy_pass http://localhost:3001/socket.io/;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \\\$http_upgrade;
         proxy_set_header Connection "Upgrade";
