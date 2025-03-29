@@ -1,0 +1,16 @@
+- name: Docker installieren
+  hosts: docker_app_ec2
+  become: true
+  pre_tasks:
+    - name: Update apt
+      ansible.builtin.apt:
+        update_cache: yes
+
+  vars:
+    docker_users:
+      - ubuntu
+      - jenkins
+
+  tasks:
+    - name: Docker installieren und Benutzer zu docker-Gruppe hinzufügen
+      include_tasks: tasks/docker_setup.yml

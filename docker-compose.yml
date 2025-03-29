@@ -1,32 +1,35 @@
-version: '3.8'
-
 services:
   backend:
-    build: ./backend
+    image: marcusbieber384/kaiwa-backend
     container_name: kaiwa-backend
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
-      - kaiwa_db_data:/backend/database
+      - kaiwa_db_data:/backend/database:rw
     networks:
       - kaiwa_app_network
     environment:
       - DATABASE_PATH=/backend/database/database.db
+    restart: unless-stopped
 
   frontend:
-    build: ./frontend
+    image: marcusbieber384/kaiwa-frontend
     container_name: kaiwa-frontend
     ports:
       - "80:80"
     depends_on:
-      - kaiwa-backend
+      - backend
     networks:
       - kaiwa_app_network
     environment:
       - BACKEND_URL=http://kaiwa-backend:3001
+    restart: unless-stopped
 
 volumes:
   kaiwa_db_data:
+    name: kaiwa_db_data
 
 networks:
   kaiwa_app_network:
+    name: kaiwa_app_network
+    driver: bridge

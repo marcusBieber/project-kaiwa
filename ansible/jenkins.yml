@@ -16,6 +16,9 @@
     credential_id: "jenkins-ec2-key"
     credential_username: "ubuntu"
     ssh_private_key: "{{ lookup('file', '~/.ssh/universal-neu.pem') }}"
+    docker_users:
+      - ubuntu
+      - jenkins
 
   roles:
     - role: geerlingguy.java
@@ -44,7 +47,14 @@
         owner: jenkins
         group: jenkins
         mode: '0644'
+        force: yes
       notify: restart jenkins
+
+    - name: Starte Jenkins neu
+      service: 
+        name: jenkins
+        state: restarted
+      when: ansible_os_family == "Debian"
 
     - name: Füge SSH-Private-Key als Credential hinzu
       command: >

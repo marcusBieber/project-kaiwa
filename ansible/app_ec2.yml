@@ -1,5 +1,5 @@
 - name: Server für App-Deployment konfigurieren
-  hosts: app_deploy_ec2
+  hosts: app_ec2
   become: true
   pre_tasks:
     - name: Update apt

@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
     // Benutzerliste über das "update_user"-Event ins Frontend senden
     setTimeout(() => {
       io.emit("update_user", users);
-    }, 1000);
+    }, 0);
   });
 
   // Daten über das "send_message"-Event aus dem Frontend empfangen
