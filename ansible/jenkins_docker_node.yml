@@ -1,0 +1,25 @@
+- name: Jenkins Docker Node mit Java konfigurieren
+  hosts: jenkins_docker_node
+  become: true
+  tasks:
+    - name: Update apt package index
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install OpenJDK 17
+      ansible.builtin.apt:
+        name: openjdk-17-jre
+        state: present
+
+    - name: Verify Java installation
+      command: java -version
+      register: java_version_output
+      changed_when: false
+
+    - name: Show Java version
+      debug:
+        msg: "{{ java_version_output.stderr_lines }}"
+
+    - name: Docker installieren
+      include_tasks: tasks/docker_setup.yml
+      when: ansible_os_family == "Debian"

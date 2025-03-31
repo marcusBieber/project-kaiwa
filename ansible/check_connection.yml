@@ -1,0 +1,21 @@
+---
+- name: Alle Hosts zu den bekannten Hosts hinzufügen und Verbindung überprüfen
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Warte bis SSH erreichbar ist
+      ansible.builtin.wait_for:
+        port: 22
+        host: "{{ inventory_hostname }}"
+        timeout: 60  # Wartezeit (Sekunden)
+        delay: 8   # Erste Prüfung nach 10 Sekunden
+      delegate_to: localhost
+
+    - name: write all hosts to the list of known hosts
+      ansible.builtin.shell: ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts
+      delegate_to: localhost
+      run_once: false # run on each host
+
+    - name: ping all hosts
+      ansible.builtin.ping:
+      

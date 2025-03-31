@@ -1,0 +1,25 @@
+# Terraform-Statusdateien
+*.tfstate
+*.tfstate.backup
+
+# Terraform Crash Logs
+crash.log
+
+# Terraform Plan-Dateien
+*.tfplan
+
+# Terraform Provider-Cache
+.terraform/
+.terraform.lock.hcl
+
+# Private Schlüssel und Zugangsdaten (falls generiert)
+*.pem
+*.key
+*.crt
+
+# Sensible Terraform Variablen
+terraform.tfvars
+terraform.tfvars.json
+
+# Sonstiges
+.DS_Store
