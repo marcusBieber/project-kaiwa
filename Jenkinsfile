@@ -12,15 +12,15 @@ pipeline {
     environment {
         GIT_BRANCH = "${params.TARGET_BRANCH != 'none' ? params.TARGET_BRANCH : env.GIT_BRANCH}"
         EC2_USER = "ubuntu"
-        APP_HOST = "3.71.255.66"
-        DOCKER_APP_HOST = "3.72.111.70"
+        APP_HOST = "35.159.37.93"
+        DOCKER_APP_HOST = "3.122.127.55"
         DOCKER_APP_URL = "http://${DOCKER_APP_HOST}"
         APP_NAME = "kaiwa"
         APP_DEPLOY_PATH = "/var/www/${APP_NAME}-frontend"
         APP_BACKEND_PATH = "/var/www/${APP_NAME}-backend"
         APP_URL = "http://${APP_HOST}"
         SSH_CREDENTIALS = "jenkins-ec2-key"
-        DOCKERHUB_CREDENTIALS = "dockerhub"
+        DOCKERHUB_CREDENTIALS = "docker-login"
         DOCKERHUB_USERNAME = "marcusbieber384"
         DOCKERHUB_REPOSITORY = "${DOCKERHUB_USERNAME}/${APP_NAME}" // + -backend/-frontend
         IMAGE_TAG = "latest"
