@@ -52,6 +52,7 @@ pipeline {
                 }
 
                 stage("Running Backend Tests") {
+                    agent {label "jenkins"}
                     steps {
                         dir("backend") {
                             sh "npm install"
@@ -61,6 +62,7 @@ pipeline {
                 }
 
                 stage("Running Frontend Tests") {
+                    agent {label "jenkins"}
                     steps {
                         dir("frontend") {
                             sh "npm install"
