@@ -112,7 +112,7 @@ pipeline {
                                     echo "Prüfe, ob Docker Compose up ist..."
                                     if docker ps --filter "name=kaiwa-backend" --format "{{.Names}}" | grep -q "kaiwa-backend"; then
                                         echo "Docker Compose ist bereits aktiv. Stoppe es..."
-                                        docker-compose -f /home/ubuntu/docker-compose.yml down
+                                        docker compose -f /home/ubuntu/docker-compose.yml down
                                     else
                                         echo "Docker Compose ist nicht aktiv."
                                     fi
@@ -130,7 +130,7 @@ pipeline {
                             sh """
                                 ssh -o StrictHostKeyChecking=no ${EC2_USER}@${DOCKER_APP_HOST} '
                                     echo "Starte Docker Compose..."
-                                    docker-compose -f /home/ubuntu/docker-compose.yml up -d
+                                    docker compose -f /home/ubuntu/docker-compose.yml up -d
                                     echo "Docker Compose gestartet."
                                 '
                             """

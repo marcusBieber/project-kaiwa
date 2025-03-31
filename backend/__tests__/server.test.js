@@ -8,7 +8,7 @@ describe("API & WebSocket Tests", () => {
   let clientSocket;
 
   beforeAll((done) => {
-    clientSocket = new Client("http://localhost:3001", {
+    clientSocket = new Client("http://localhost:3002", {
       transports: ["websocket"],
     });
     clientSocket.on("connect", done);
