@@ -1,14 +1,14 @@
 [jenkins]
-18.185.148.246 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/devOps/kaiwa-next-level/terraform/ansible-key.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+3.73.123.208 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./ansible-key.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [jenkins_docker_node]
-3.79.236.225 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/devOps/kaiwa-next-level/terraform/ansible-key.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+3.69.166.2 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./ansible-key.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [app_ec2]
-3.79.235.118 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/devOps/kaiwa-next-level/terraform/ansible-key.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+3.123.154.142 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./ansible-key.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [docker_app_ec2]
-18.194.88.233 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/devOps/kaiwa-next-level/terraform/ansible-key.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+63.176.96.247 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./ansible-key.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3

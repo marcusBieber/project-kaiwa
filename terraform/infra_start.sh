@@ -6,75 +6,71 @@
 
 set -e  # Beende das Skript bei Fehlern
 
-echo "🚀 Starte Terraform Deployment..."
+echo -e "\n🚀 Starte Terraform Deployment..."
 terraform init
 terraform apply -auto-approve
-echo "🎉 Deployment abgeschlossen."
+echo -e "\n🎉 Deployment abgeschlossen.\n"
 
 # Terraform-Output abrufen und als Array speichern
-echo "💻 Abrufen der IP-Adressen..."
-PUBLIC_IPS=($(terraform output -json public_ips | jq -r '.[]'))
+echo -e "\n💻 Abrufen der IP-Adressen...\n"
+JENKINS_IPS=($(terraform output -json jenkins_instances_ips | jq -r '.[]'))
+WEB_IPS=($(terraform output -json web_instances_ips | jq -r '.[]'))
 
 # Prüfen, ob 4 IPs vorhanden sind
-if [ ${#PUBLIC_IPS[@]} -lt 4 ]; then
-  echo "❌ Fehler: Weniger als 4 IP-Adressen im Terraform-Output gefunden!"
-  exit 1
+if [ $((${#JENKINS_IPS[@]} + ${#WEB_IPS[@]})) -lt 4 ]; then
+  echo -e "\n⚠️  Warnung: Es wurden weniger als 4 IP-Adressen gefunden!"
+  echo -e "⚠️  Das Skript läuft trotzdem weiter...\n"
 fi
 
-# IP-Adressen den Hostgruppen zuweisen
-JENKINS_IP=${PUBLIC_IPS[0]}
-JENKINS_DOCKER_NODE_IP=${PUBLIC_IPS[1]}
-APP_EC2_IP=${PUBLIC_IPS[2]}
-DOCKER_APP_EC2_IP=${PUBLIC_IPS[3]}
+# IP-Adressen den Hostgruppen zuweisen (leere Einträge werden als "MISSING" gesetzt)
+JENKINS_IP=${JENKINS_IPS[0]:-"!!MISSING!!"}
+JENKINS_DOCKER_NODE_IP=${JENKINS_IPS[1]:-"!!MISSING!!"}
+APP_EC2_IP=${WEB_IPS[0]:-"!!MISSING!!"}
+DOCKER_APP_EC2_IP=${WEB_IPS[1]:-"!!MISSING!!"}
 
 KEY_NAME=$(terraform output -raw key_name)
 USERNAME="ubuntu"
-PRIVATE_KEY_PATH=$(terraform output -raw private_key_pem)
+PRIVATE_KEY=$(terraform output -raw private_key_pem)
 
-echo "🔑 Schlüsselname: $KEY_NAME"
-echo "🌍 Jenkins: $JENKINS_IP"
-echo "🌍 Jenkins Docker Node: $JENKINS_DOCKER_NODE_IP"
-echo "🌍 App EC2: $APP_EC2_IP"
-echo "🌍 Docker App EC2: $DOCKER_APP_EC2_IP"
 
 # Alte Inventory-Datei löschen
 INVENTORY_FILE_OLD="inventory.ini.off"
 if [ -f "$INVENTORY_FILE_OLD" ]; then
-  echo "🗑️ Alte Inventory-Datei gefunden. Lösche..."
-  rm -f inventory.ini
+  echo -e "\n🗑️ Alte Inventory-Datei gefunden. Lösche $INVENTORY_FILE_OLD...\n"
+  rm -f "$INVENTORY_FILE_OLD"
 fi
 
 # Letzte Inventory-Datei sichern
 INVENTORY_FILE="inventory.ini"
 if [ -f "$INVENTORY_FILE" ]; then
-  echo "📦 Alte Inventory-Datei gefunden. Umbenennen auf $INVENTORY_FILE.off..."
   mv "$INVENTORY_FILE" "$INVENTORY_FILE.off"
+  echo -e "\n📦 Letzte Inventory-Datei wird gesichert. Umbenennen auf $INVENTORY_FILE.off...\n"
 fi
 
 # Neue Inventory-Datei erstellen
-echo "📝 Erstelle neue Ansible Inventory-Datei..."
+echo -e "\n📝 Erstelle neue Ansible Inventory-Datei...\n"
 cat <<EOF > $INVENTORY_FILE
 [jenkins]
-$JENKINS_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY_PATH ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+$JENKINS_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [jenkins_docker_node]
-$JENKINS_DOCKER_NODE_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY_PATH ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+$JENKINS_DOCKER_NODE_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [app_ec2]
-$APP_EC2_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY_PATH ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+$APP_EC2_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [docker_app_ec2]
-$DOCKER_APP_EC2_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY_PATH ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+$DOCKER_APP_EC2_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
 EOF
 
-echo "✅ Inventory-Datei wurde erstellt: $INVENTORY_FILE"
+echo -e "✅ Inventory-Datei wurde erstellt: $INVENTORY_FILE\n"
 
 # Ansible-Konfigurationsdatei erstellen
 ANSIBLE_CFG="ansible.cfg"
-echo "📝 Erstelle Ansible Konfigurationsdatei..."
+echo -e "\n📝 Erstelle Ansible Konfigurationsdatei...\n"
 cat <<EOF > $ANSIBLE_CFG
 [defaults]
 inventory = inventory.ini
@@ -83,29 +79,37 @@ inventory = inventory.ini
 pipelining = True
 EOF
 
-echo "✅ Ansible Konfigurationsdatei wurde erstellt: $ANSIBLE_CFG"
+echo -e "✅ Ansible Konfigurationsdatei wurde erstellt: $ANSIBLE_CFG\n"
 
 # Ansible-Testlauf
-echo "🚀 Teste Ansible-Verbindung..."
+echo -e "\n🚀 Teste Ansible-Verbindung...\n"
 
 ansible-playbook ../ansible/check_connection.yml
 
-echo "🎉 Alle Instanzen erreichbar und bereit"
+echo -e "\n🎉 Alle Instanzen erreichbar und bereit\n"
+
+echo "🌍 Jenkins SSH & URL: ssh -i $PRIVATE_KEY $USERNAME@$JENKINS_IP & http://$JENKINS_IP:8080"
+echo "🌍 Jenkins Docker Node SSH: ssh -i $PRIVATE_KEY $USERNAME@$JENKINS_DOCKER_NODE_IP"
+echo "🌍 App EC2 SSH & URL: ssh -i $PRIVATE_KEY $USERNAME@$APP_EC2_IP & http://$APP_EC2_IP"
+echo "🌍 Docker App EC2 SSH & URL: ssh -i $PRIVATE_KEY $USERNAME@$DOCKER_APP_EC2_IP & http://$DOCKER_APP_EC2_IP"
+
+echo -e "\n🔑 Public-Key: $KEY_NAME"
+echo -e "🔑 Private-Key: $PRIVATE_KEY\n"
 
 while true; do
     read -p "🚀 Soll die Konfiguration der Instanzen gestartet werden? ja oder nein🚀: " answer
     case "${answer,,}" in
         j|ja)
-            echo "💾 Starte install.sh..."
+            echo -e "\n💾 Starte install.sh..."
             ./install.sh
             break
             ;;
         n|nein)
-            echo "❌ Kein Problem, die Infrastruktur wurde nicht konfiguriert."
+            echo -e "\n❌ Kein Problem, die Infrastruktur wurde nicht konfiguriert."
             break
             ;;
         *)
-            echo "❌ Ungültige Antwort. Bitte 'ja' oder 'nein' eingeben."
+            echo -e "\n❌ Ungültige Antwort. Bitte 'ja' oder 'nein' eingeben."
             ;;
     esac
 done

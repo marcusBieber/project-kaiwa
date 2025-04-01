@@ -19,24 +19,14 @@
         enabled: true
 
     - name: NodeJS und npm installieren
-      ansible.builtin.shell:
-        cmd: |
+      ansible.builtin.shell: |
           curl -sL https://deb.nodesource.com/setup_20.x | bash -
           apt-get install -y nodejs
 
     - name: PM2 installieren
-      ansible.builtin.shell:
-        cmd: npm install pm2 -g
+      ansible.builtin.shell: npm install pm2 -g
 
     - name: PM2 als Service einrichten
-      ansible.builtin.shell:
-        cmd: |
-          pm2 startup systemd
-          env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
-        notify: Instanz neustarten
-
-  handlers:
-    - name: Instanz neustarten
-      service:
-        name: app_deploy_ec2
-        state: restarted
+      ansible.builtin.shell: |
+        pm2 startup systemd
+        env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
