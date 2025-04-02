@@ -1,6 +1,3 @@
-output "public_ips" {
-  value = concat (aws_instance.jenkins[*].public_ip, aws_instance.web[*].public_ip)
-}
 
 output "jenkins_instances_ips" {
   value = aws_instance.jenkins[*].public_ip

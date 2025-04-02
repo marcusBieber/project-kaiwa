@@ -1,3 +1,4 @@
+
 provider "aws" {
   region = "eu-central-1"
 }
@@ -9,7 +10,7 @@ resource "tls_private_key" "ssh_key" {
 
 resource "local_file" "private_key" {
   content         = tls_private_key.ssh_key.private_key_pem
-  filename        = "./ansible-key.pem"
+  filename        = "${var.home_path}/.ssh/ansible-key.pem"
   file_permission = "0600"
 }
 

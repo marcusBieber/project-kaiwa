@@ -15,7 +15,7 @@
       - nodejs
     credential_id: "jenkins-ec2-key"
     credential_username: "ubuntu"
-    ssh_private_key: "{{ lookup('file', '~/devOps/kaiwa-next-level/terraform/ansible-key.pem') }}"
+    ssh_private_key: "{{ lookup('file', '~/.ssh/ansible-key.pem') }}"
     docker_users:
       - ubuntu
       - jenkins
