@@ -12,8 +12,8 @@ pipeline {
     environment {
         GIT_BRANCH = "${params.TARGET_BRANCH != 'none' ? params.TARGET_BRANCH : env.GIT_BRANCH}"
         EC2_USER = "ubuntu"
-        APP_HOST = "18.156.171.184"
-        DOCKER_APP_HOST = "18.194.147.64"
+        APP_HOST = "18.184.166.72"
+        DOCKER_APP_HOST = "3.71.176.69"
         DOCKER_APP_URL = "http://${DOCKER_APP_HOST}"
         APP_NAME = "kaiwa"
         APP_DEPLOY_PATH = "/var/www/${APP_NAME}-frontend"

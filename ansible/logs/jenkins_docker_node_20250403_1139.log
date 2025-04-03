@@ -1,6 +1,6 @@
- ____________________________
-< PLAY [Docker installieren] >
- ----------------------------
+ ___________________________________________________
+< PLAY [Jenkins Docker Node mit Java konfigurieren] >
+ ---------------------------------------------------
         \   ^__^
          \  (oo)\_______
             (__)\       )\/\
@@ -16,28 +16,27 @@
                 ||----w |
                 ||     ||
 
-ok: [18.194.147.64]
- ___________________
-< TASK [Update apt] >
- -------------------
+ok: [18.194.244.231]
+ _________________________________
+< TASK [Update apt package index] >
+ ---------------------------------
         \   ^__^
          \  (oo)\_______
             (__)\       )\/\
                 ||----w |
                 ||     ||
 
-changed: [18.194.147.64]
- _________________________________________________________
-/ TASK [Docker installieren und Benutzer zu docker-Gruppe \
-\ hinzufügen]                                             /
- ---------------------------------------------------------
+changed: [18.194.244.231]
+ ____________________________
+< TASK [Docker installieren] >
+ ----------------------------
         \   ^__^
          \  (oo)\_______
             (__)\       )\/\
                 ||----w |
                 ||     ||
 
-included: /home/marcus/devOps/kaiwa-next-level/ansible/tasks/docker_setup.yml for 18.194.147.64
+included: /home/marcus/devOps/kaiwa-next-level/ansible/tasks/docker_setup.yml for 18.194.244.231
  _________________________________
 < TASK [Update APT package index] >
  ---------------------------------
@@ -47,7 +46,7 @@ included: /home/marcus/devOps/kaiwa-next-level/ansible/tasks/docker_setup.yml fo
                 ||----w |
                 ||     ||
 
-changed: [18.194.147.64]
+changed: [18.194.244.231]
  __________________________________
 < TASK [Install required packages] >
  ----------------------------------
@@ -57,7 +56,7 @@ changed: [18.194.147.64]
                 ||----w |
                 ||     ||
 
-ok: [18.194.147.64]
+ok: [18.194.244.231]
  ________________________________________
 < TASK [Create Docker GPG key directory] >
  ----------------------------------------
@@ -67,7 +66,7 @@ ok: [18.194.147.64]
                 ||----w |
                 ||     ||
 
-changed: [18.194.147.64]
+changed: [18.194.244.231]
  ________________________________
 < TASK [Download Docker GPG key] >
  --------------------------------
@@ -80,7 +79,7 @@ changed: [18.194.147.64]
 [WARNING]: Module remote_tmp /root/.ansible/tmp did not exist and was created
 with a mode of 0700, this may cause issues when running as another user. To
 avoid this, create the remote_tmp dir with the correct permissions manually
-changed: [18.194.147.64]
+changed: [18.194.244.231]
  ______________________________________________________
 < TASK [Ensure Docker GPG key has correct permissions] >
  ------------------------------------------------------
@@ -90,7 +89,7 @@ changed: [18.194.147.64]
                 ||----w |
                 ||     ||
 
-ok: [18.194.147.64]
+ok: [18.194.244.231]
  ______________________________
 < TASK [Add Docker repository] >
  ------------------------------
@@ -100,7 +99,7 @@ ok: [18.194.147.64]
                 ||----w |
                 ||     ||
 
-changed: [18.194.147.64]
+changed: [18.194.244.231]
  _______________________________________
 < TASK [Update APT package index again] >
  ---------------------------------------
@@ -110,7 +109,7 @@ changed: [18.194.147.64]
                 ||----w |
                 ||     ||
 
-changed: [18.194.147.64]
+changed: [18.194.244.231]
  ________________________________
 < TASK [Install Docker packages] >
  --------------------------------
@@ -120,7 +119,7 @@ changed: [18.194.147.64]
                 ||----w |
                 ||     ||
 
-changed: [18.194.147.64]
+changed: [18.194.244.231]
  ________________________________________
 < TASK [Start and enable Docker service] >
  ----------------------------------------
@@ -130,7 +129,7 @@ changed: [18.194.147.64]
                 ||----w |
                 ||     ||
 
-ok: [18.194.147.64]
+ok: [18.194.244.231]
  __________________________________
 < TASK [Add users to docker group] >
  ----------------------------------
@@ -140,8 +139,18 @@ ok: [18.194.147.64]
                 ||----w |
                 ||     ||
 
-changed: [18.194.147.64] => (item=ubuntu)
-changed: [18.194.147.64] => (item=jenkins)
+changed: [18.194.244.231] => (item=ubuntu)
+changed: [18.194.244.231] => (item=jenkins)
+ ___________________________
+< TASK [Install OpenJDK 17] >
+ ---------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+
+changed: [18.194.244.231]
  ____________
 < PLAY RECAP >
  ------------
@@ -151,5 +160,5 @@ changed: [18.194.147.64] => (item=jenkins)
                 ||----w |
                 ||     ||
 
-18.194.147.64              : ok=13   changed=8    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+18.194.244.231             : ok=14   changed=9    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 

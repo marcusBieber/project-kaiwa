@@ -1,6 +1,12 @@
 - name: Jenkins Docker Node mit Java konfigurieren
   hosts: jenkins_docker_node
   become: true
+
+  vars:
+    docker_users:
+      - ubuntu
+      - jenkins
+      
   tasks:
     - name: Update apt package index
       ansible.builtin.apt:

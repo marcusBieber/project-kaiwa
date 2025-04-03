@@ -16,7 +16,7 @@
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  ___________________
 < TASK [Update apt] >
  -------------------
@@ -26,7 +26,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ____________________________________________________________
 / TASK [geerlingguy.java : Include OS-specific variables for \
 \ Fedora or FreeBSD.]                                        /
@@ -37,7 +37,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  ____________________________________________________________
 / TASK [geerlingguy.java : Include OS-specific variables for \
 \ Amazon.]                                                   /
@@ -48,7 +48,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  _____________________________________________________________
 / TASK [geerlingguy.java : Include version-specific variables \
 \ for CentOS/RHEL.]                                           /
@@ -59,7 +59,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  _____________________________________________________________
 / TASK [geerlingguy.java : Include version-specific variables \
 \ for Ubuntu.]                                                /
@@ -70,7 +70,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  _____________________________________________________________
 / TASK [geerlingguy.java : Include version-specific variables \
 \ for Debian.]                                                /
@@ -81,7 +81,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  _________________________________________________
 < TASK [geerlingguy.java : Define java_packages.] >
  -------------------------------------------------
@@ -91,7 +91,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  _________________________________________
 < TASK [geerlingguy.java : include_tasks] >
  -----------------------------------------
@@ -101,7 +101,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  _________________________________________
 < TASK [geerlingguy.java : include_tasks] >
  -----------------------------------------
@@ -111,7 +111,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  _________________________________________
 < TASK [geerlingguy.java : include_tasks] >
  -----------------------------------------
@@ -121,7 +121,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-included: /home/marcus/.ansible/roles/geerlingguy.java/tasks/setup-Debian.yml for 3.124.206.3
+included: /home/marcus/.ansible/roles/geerlingguy.java/tasks/setup-Debian.yml for 18.192.61.214
  __________________________________________________________
 < TASK [geerlingguy.java : Ensure 'man' directory exists.] >
  ----------------------------------------------------------
@@ -131,7 +131,7 @@ included: /home/marcus/.ansible/roles/geerlingguy.java/tasks/setup-Debian.yml fo
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  _____________________________________________________
 < TASK [geerlingguy.java : Ensure Java is installed.] >
  -----------------------------------------------------
@@ -141,7 +141,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  _________________________________________
 < TASK [geerlingguy.java : include_tasks] >
  -----------------------------------------
@@ -151,7 +151,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  ________________________________________________________
 < TASK [geerlingguy.java : Set JAVA_HOME if configured.] >
  --------------------------------------------------------
@@ -161,7 +161,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  ____________________________________________________________
 < TASK [geerlingguy.jenkins : Include OS-Specific variables] >
  ------------------------------------------------------------
@@ -171,7 +171,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  ______________________________________________________
 < TASK [geerlingguy.jenkins : Define jenkins_repo_url] >
  ------------------------------------------------------
@@ -181,7 +181,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  __________________________________________________________
 < TASK [geerlingguy.jenkins : Define jenkins_repo_key_url] >
  ----------------------------------------------------------
@@ -191,7 +191,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  _____________________________________________________
 < TASK [geerlingguy.jenkins : Define jenkins_pkg_url] >
  -----------------------------------------------------
@@ -201,7 +201,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  ____________________________________________
 < TASK [geerlingguy.jenkins : include_tasks] >
  --------------------------------------------
@@ -211,7 +211,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  ____________________________________________
 < TASK [geerlingguy.jenkins : include_tasks] >
  --------------------------------------------
@@ -221,7 +221,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-included: /home/marcus/.ansible/roles/geerlingguy.jenkins/tasks/setup-Debian.yml for 3.124.206.3
+included: /home/marcus/.ansible/roles/geerlingguy.jenkins/tasks/setup-Debian.yml for 18.192.61.214
  _____________________________________________________
 / TASK [geerlingguy.jenkins : Ensure dependencies are \
 \ installed.]                                         /
@@ -232,7 +232,7 @@ included: /home/marcus/.ansible/roles/geerlingguy.jenkins/tasks/setup-Debian.yml
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ________________________________________________________
 / TASK [geerlingguy.jenkins : Add Jenkins apt repository \
 \ key.]                                                  /
@@ -246,7 +246,7 @@ changed: [3.124.206.3]
 [WARNING]: Module remote_tmp /root/.ansible/tmp did not exist and was created
 with a mode of 0700, this may cause issues when running as another user. To
 avoid this, create the remote_tmp dir with the correct permissions manually
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  __________________________________________________________
 < TASK [geerlingguy.jenkins : Add Jenkins apt repository.] >
  ----------------------------------------------------------
@@ -256,7 +256,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  _______________________________________________________
 / TASK [geerlingguy.jenkins : Download specific Jenkins \
 \ version.]                                             /
@@ -267,7 +267,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  ______________________________________________________
 / TASK [geerlingguy.jenkins : Check if we downloaded a \
 \ specific version of Jenkins.]                        /
@@ -278,7 +278,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  _____________________________________________________________
 / TASK [geerlingguy.jenkins : Install our specific version of \
 \ Jenkins.]                                                   /
@@ -289,7 +289,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  ___________________________________________________________
 < TASK [geerlingguy.jenkins : Ensure Jenkins is installed.] >
  -----------------------------------------------------------
@@ -299,7 +299,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ____________________________________________
 < TASK [geerlingguy.jenkins : include_tasks] >
  --------------------------------------------
@@ -309,7 +309,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-included: /home/marcus/.ansible/roles/geerlingguy.jenkins/tasks/settings.yml for 3.124.206.3
+included: /home/marcus/.ansible/roles/geerlingguy.jenkins/tasks/settings.yml for 18.192.61.214
  __________________________________________________________
 / TASK [geerlingguy.jenkins : Check if jenkins_init_folder \
 \ exists.]                                                 /
@@ -320,7 +320,7 @@ included: /home/marcus/.ansible/roles/geerlingguy.jenkins/tasks/settings.yml for
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  ________________________________________________________
 / TASK [geerlingguy.jenkins : Ensure jenkins_init_folder \
 \ exists.]                                               /
@@ -331,7 +331,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ________________________________________________________
 / TASK [geerlingguy.jenkins : Check if jenkins_init_file \
 \ exists.]                                               /
@@ -342,7 +342,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  ______________________________________________________
 / TASK [geerlingguy.jenkins : Ensure jenkins_init_file \
 \ exists.]                                             /
@@ -353,7 +353,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  _____________________________________________________________
 / TASK [geerlingguy.jenkins : Populate jenkins_init_file with \
 \ service tag.]                                               /
@@ -364,7 +364,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  _____________________________________________________________
 < TASK [geerlingguy.jenkins : Modify variables in init file.] >
  -------------------------------------------------------------
@@ -374,11 +374,11 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3] => (item={'option': 'JENKINS_OPTS', 'value': ''})
-changed: [3.124.206.3] => (item={'option': 'JAVA_OPTS', 'value': '-Djenkins.install.runSetupWizard=false'})
-changed: [3.124.206.3] => (item={'option': 'JENKINS_HOME', 'value': '/var/lib/jenkins'})
-changed: [3.124.206.3] => (item={'option': 'JENKINS_PREFIX', 'value': ''})
-changed: [3.124.206.3] => (item={'option': 'JENKINS_PORT', 'value': 8080})
+changed: [18.192.61.214] => (item={'option': 'JENKINS_OPTS', 'value': ''})
+changed: [18.192.61.214] => (item={'option': 'JAVA_OPTS', 'value': '-Djenkins.install.runSetupWizard=false'})
+changed: [18.192.61.214] => (item={'option': 'JENKINS_HOME', 'value': '/var/lib/jenkins'})
+changed: [18.192.61.214] => (item={'option': 'JENKINS_PREFIX', 'value': ''})
+changed: [18.192.61.214] => (item={'option': 'JENKINS_PORT', 'value': 8080})
  _________________________________________________
 / TASK [geerlingguy.jenkins : Ensure jenkins_home \
 \ /var/lib/jenkins exists.]                       /
@@ -389,7 +389,7 @@ changed: [3.124.206.3] => (item={'option': 'JENKINS_PORT', 'value': 8080})
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  ____________________________________________________________
 / TASK [geerlingguy.jenkins : Immediately restart Jenkins on \
 \ init config changes.]                                      /
@@ -400,7 +400,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ________________________________________________________
 / TASK [geerlingguy.jenkins : Create custom init scripts \
 \ directory.]                                            /
@@ -411,7 +411,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ________________________________________________________
 / TASK [geerlingguy.jenkins : Configure proxy config for \
 \ Jenkins]                                               /
@@ -422,7 +422,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  _____________________________________________________________
 / TASK [geerlingguy.jenkins : Trigger handlers immediately in \
 \ case Jenkins was installed]                                 /
@@ -443,7 +443,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ____________________________________________________________
 / TASK [geerlingguy.jenkins : Immediately restart Jenkins on \
 \ http or user changes.]                                     /
@@ -454,7 +454,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ___________________________________________________________
 / TASK [geerlingguy.jenkins : Ensure Jenkins is started and \
 \ runs on startup.]                                         /
@@ -465,7 +465,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  __________________________________________________________
 / TASK [geerlingguy.jenkins : Wait for Jenkins to start up \
 \ before proceeding.]                                      /
@@ -476,7 +476,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  _________________________________________________________
 / TASK [geerlingguy.jenkins : Get the jenkins-cli jarfile \
 \ from the Jenkins server.]                               /
@@ -487,7 +487,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  __________________________________________________________
 / TASK [geerlingguy.jenkins : Remove Jenkins security init \
 \ scripts after first startup.]                            /
@@ -498,7 +498,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ____________________________________________
 < TASK [geerlingguy.jenkins : include_tasks] >
  --------------------------------------------
@@ -508,7 +508,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-included: /home/marcus/.ansible/roles/geerlingguy.jenkins/tasks/plugins.yml for 3.124.206.3
+included: /home/marcus/.ansible/roles/geerlingguy.jenkins/tasks/plugins.yml for 18.192.61.214
  _____________________________________________________________
 / TASK [geerlingguy.jenkins : Get Jenkins admin password from \
 \ file.]                                                      /
@@ -519,7 +519,7 @@ included: /home/marcus/.ansible/roles/geerlingguy.jenkins/tasks/plugins.yml for 
                 ||----w |
                 ||     ||
 
-skipping: [3.124.206.3]
+skipping: [18.192.61.214]
  ________________________________________________________
 / TASK [geerlingguy.jenkins : Set Jenkins admin password \
 \ fact.]                                                 /
@@ -530,7 +530,7 @@ skipping: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  ____________________________________________________
 / TASK [geerlingguy.jenkins : Create Jenkins updates \
 \ directory.]                                        /
@@ -541,7 +541,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  _____________________________________________________________
 / TASK [geerlingguy.jenkins : Download current plugin updates \
 \ from Jenkins update site.]                                  /
@@ -552,7 +552,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  _____________________________________________________________
 / TASK [geerlingguy.jenkins : Remove first and last line from \
 \ json file.]                                                 /
@@ -563,7 +563,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  ___________________________________________________________
 / TASK [geerlingguy.jenkins : Install Jenkins plugins using \
 \ password.]                                                /
@@ -574,11 +574,11 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3] => (item=workflow-aggregator)
-changed: [3.124.206.3] => (item=pipeline-stage-view)
-changed: [3.124.206.3] => (item=ssh-agent)
-changed: [3.124.206.3] => (item=github)
-changed: [3.124.206.3] => (item=nodejs)
+changed: [18.192.61.214] => (item=workflow-aggregator)
+changed: [18.192.61.214] => (item=pipeline-stage-view)
+changed: [18.192.61.214] => (item=ssh-agent)
+changed: [18.192.61.214] => (item=github)
+changed: [18.192.61.214] => (item=nodejs)
  ______________________________________________________
 < TASK [Warten, bis Jenkins vollständig gestartet ist] >
  ------------------------------------------------------
@@ -588,7 +588,7 @@ changed: [3.124.206.3] => (item=nodejs)
                 ||----w |
                 ||     ||
 
-ok: [3.124.206.3]
+ok: [18.192.61.214]
  __________________________________
 < TASK [Jenkins CLI herunterladen] >
  ----------------------------------
@@ -598,7 +598,7 @@ ok: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  __________________________________________________
 / TASK [NodeJS-Plugin konfigurieren (NodeJS 23.8.0 \
 \ installieren)]                                   /
@@ -609,7 +609,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ___________________________
 < TASK [Starte Jenkins neu] >
  ---------------------------
@@ -619,7 +619,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  __________________________________________________
 < TASK [Füge SSH-Private-Key als Credential hinzu] >
  --------------------------------------------------
@@ -629,7 +629,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ______________________________________________
 < TASK [Erstelle Pipeline-Job mit Jenkins CLI] >
  ----------------------------------------------
@@ -639,7 +639,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ___________________________________
 < RUNNING HANDLER [restart jenkins] >
  -----------------------------------
@@ -649,7 +649,7 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-changed: [3.124.206.3]
+changed: [18.192.61.214]
  ____________
 < PLAY RECAP >
  ------------
@@ -659,5 +659,5 @@ changed: [3.124.206.3]
                 ||----w |
                 ||     ||
 
-3.124.206.3                : ok=45   changed=23   unreachable=0    failed=0    skipped=14   rescued=0    ignored=0   
+18.192.61.214              : ok=45   changed=23   unreachable=0    failed=0    skipped=14   rescued=0    ignored=0   
 
