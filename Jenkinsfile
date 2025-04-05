@@ -20,7 +20,7 @@ pipeline {
         APP_BACKEND_PATH = "/var/www/${APP_NAME}-backend"
         APP_URL = "http://${APP_HOST}"
         SSH_CREDENTIALS = "jenkins-ec2-key"
-        DOCKERHUB_CREDENTIALS = "dockerhub"
+        DOCKERHUB_CREDENTIALS = "dockerhub-login"
         DOCKERHUB_USERNAME = "marcusbieber384"
         DOCKERHUB_REPOSITORY = "${DOCKERHUB_USERNAME}/${APP_NAME}" // + -backend/-frontend
         IMAGE_TAG = "latest"
