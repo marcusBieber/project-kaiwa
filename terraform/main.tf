@@ -87,12 +87,12 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "jenkins" {
   count           = var.jenkins_instance_count
   ami             = data.aws_ami.ubuntu.id # "ami-07eef52105e8a2059" # Ubuntu
-  instance_type   = "t2.micro" # "t3.large"
+  instance_type   = "t2.micro"  #"t3.large" 
   key_name        = aws_key_pair.generated_key.key_name
   security_groups = [aws_security_group.jenkins_sg.name]
 
   tags = {
-    Name = "jenkins-instance_${count.index}"
+    Name = "jenkins-instance-${count.index}"
   }
 }
 
