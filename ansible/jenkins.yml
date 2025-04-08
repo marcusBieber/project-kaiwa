@@ -1,3 +1,4 @@
+---
 - name: Jenkins installieren und konfigurieren
   hosts: jenkins
   become: true
@@ -16,9 +17,6 @@
     credential_id: "jenkins-ec2-key"
     credential_username: "ubuntu"
     ssh_private_key: "{{ lookup('file', '~/.ssh/ansible-key.pem') }}"
-    docker_users:
-      - ubuntu
-      - jenkins
 
   roles:
     - role: geerlingguy.java
@@ -36,9 +34,9 @@
 
     - name: Jenkins CLI herunterladen
       get_url:
-        url: "http://{{ inventory_hostname }}:8080/jnlpJars/jenkins-cli.jar"
+        url: "http://{{ hostvars[inventory_hostname].ansible_host | default(inventory_hostname) }}:8080/jnlpJars/jenkins-cli.jar"
         dest: /tmp/jenkins-cli.jar
-        mode: '0755'
+        mode: "0755"
 
     - name: NodeJS-Plugin konfigurieren (NodeJS 23.8.0 installieren)
       template:
@@ -46,19 +44,19 @@
         dest: /var/lib/jenkins/jenkins.plugins.nodejs.tools.NodeJSInstallation.xml
         owner: jenkins
         group: jenkins
-        mode: '0644'
+        mode: "0644"
         force: yes
       notify: restart jenkins
 
     - name: Starte Jenkins neu
-      service: 
+      service:
         name: jenkins
         state: restarted
       when: ansible_os_family == "Debian"
 
     - name: Füge SSH-Private-Key als Credential hinzu
       command: >
-        java -jar /tmp/jenkins-cli.jar -s http://{{ inventory_hostname }}:8080/ -auth admin:admin
+        java -jar /tmp/jenkins-cli.jar -s http://{{ hostvars[inventory_hostname].ansible_host | default(inventory_hostname) }}:8080/ -auth admin:admin
         create-credentials-by-xml system::system::jenkins _
       args:
         chdir: /tmp
@@ -67,7 +65,7 @@
 
     - name: Erstelle Pipeline-Job mit Jenkins CLI
       command: >
-        java -jar /tmp/jenkins-cli.jar -s http://{{ inventory_hostname }}:8080/ -auth admin:admin create-job Kaiwa-Pipeline
+        java -jar /tmp/jenkins-cli.jar -s http://{{ hostvars[inventory_hostname].ansible_host | default(inventory_hostname) }}:8080/ -auth admin:admin create-job Kaiwa-Pipeline
       args:
         chdir: /tmp
         stdin: "{{ lookup('file', 'templates/kaiwa-pipeline.xml.j2') }}"

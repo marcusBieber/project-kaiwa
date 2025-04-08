@@ -1,3 +1,4 @@
+---
 - name: Server für App-Deployment konfigurieren
   hosts: app_ec2
   become: true

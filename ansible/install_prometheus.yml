@@ -1,0 +1,77 @@
+---
+- name: Prometheus auf app_ec2 installieren und konfigurieren
+  hosts: app_ec2
+  become: yes
+  vars:
+    prometheus_version: "2.47.0"
+    prometheus_user: prometheus
+    prometheus_dir: /opt/prometheus
+    prometheus_port: 9090
+  tasks:
+
+    - name: Sichergehen, dass die Abhängigkeiten installiert sind
+      apt:
+        name: [wget, tar]
+        state: present
+        update_cache: yes
+
+    - name: Prometheus User erstellen
+      user:
+        name: "{{ prometheus_user }}"
+        system: yes
+        shell: /usr/sbin/nologin
+
+    - name: Prometheus Downloaden
+      get_url:
+        url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+        dest: "/tmp/prometheus.tar.gz"
+
+    - name: Prometheus Entpacken
+      unarchive:
+        src: /tmp/prometheus.tar.gz
+        dest: /opt
+        remote_src: yes
+        creates: "/opt/prometheus-{{ prometheus_version }}.linux-amd64"
+
+    - name: Prometheus binärdateien verschieben
+      command: mv /opt/prometheus-{{ prometheus_version }}.linux-amd64 {{ prometheus_dir }}
+      args:
+        creates: "{{ prometheus_dir }}"
+
+    - name: Setzen der Berechtigungen für die Prometheus-Binärdateien
+      file:
+        path: "{{ prometheus_dir }}"
+        owner: "{{ prometheus_user }}"
+        group: "{{ prometheus_user }}"
+        recurse: yes
+
+    - name: Kopieren der prometheus.yml config
+      template:
+        src: files/prometheus.yml.j2
+        dest: "{{ prometheus_dir }}/prometheus.yml"
+        owner: "{{ prometheus_user }}"
+        group: "{{ prometheus_user }}"
+
+    - name: Prometheus systemd service erstellen
+      copy:
+        dest: /etc/systemd/system/prometheus.service
+        content: |
+          [Unit]
+          Description=Prometheus Monitoring
+          Wants=network-online.target
+          After=network-online.target
+
+          [Service]
+          User={{ prometheus_user }}
+          ExecStart={{ prometheus_dir }}/prometheus --config.file={{ prometheus_dir }}/prometheus.yml --storage.tsdb.path={{ prometheus_dir }}/data
+          Restart=on-failure
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Systemd für Prometheus neu laden
+      systemd:
+        daemon_reload: yes
+        name: prometheus
+        enabled: yes
+        state: started

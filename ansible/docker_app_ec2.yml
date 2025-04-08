@@ -1,3 +1,4 @@
+---
 - name: Docker installieren
   hosts: docker_app_ec2
   become: true

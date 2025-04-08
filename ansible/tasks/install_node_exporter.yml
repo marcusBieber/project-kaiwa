@@ -1,0 +1,48 @@
+---
+# include_tasks: tasks/install_node_exporter.yml - als task im Playbook zum Ausführen
+# für Monitoring in Prometheus -> Grafana
+- name: Create node_exporter user
+  user:
+    name: node_exporter
+    shell: /usr/sbin/nologin
+
+- name: Download Node Exporter
+  get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz"
+    dest: /tmp/node_exporter.tar.gz
+
+- name: Extract Node Exporter
+  unarchive:
+    src: /tmp/node_exporter.tar.gz
+    dest: /opt/
+    remote_src: yes
+
+- name: Move binary to /usr/local/bin
+  copy:
+    src: "/opt/node_exporter-1.7.0.linux-amd64/node_exporter"
+    dest: /usr/local/bin/node_exporter
+    remote_src: yes
+    mode: '0755'
+
+- name: Set permissions for node_exporter binary
+  file:
+    path: /usr/local/bin/node_exporter
+    owner: node_exporter
+    group: node_exporter
+    mode: '0755'
+
+- name: Create systemd service file
+  template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+    mode: '0644'
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Enable and start node_exporter
+  systemd:
+    name: node_exporter
+    enabled: yes
+    state: started

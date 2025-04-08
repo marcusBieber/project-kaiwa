@@ -16,7 +16,7 @@
                 ||----w |
                 ||     ||
 
-ok: [18.199.160.40]
+ok: [jenkins_agent]
  _________________________________
 < TASK [Update apt package index] >
  ---------------------------------
@@ -26,7 +26,7 @@ ok: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-changed: [18.199.160.40]
+changed: [jenkins_agent]
  ____________________________
 < TASK [Docker installieren] >
  ----------------------------
@@ -36,7 +36,7 @@ changed: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-included: /home/marcus/devOps/kaiwa-next-level/ansible/tasks/docker_setup.yml for 18.199.160.40
+included: /home/marcus/devOps/kaiwa-next-level/ansible/tasks/docker_setup.yml for jenkins_agent
  _________________________________
 < TASK [Update APT package index] >
  ---------------------------------
@@ -46,7 +46,7 @@ included: /home/marcus/devOps/kaiwa-next-level/ansible/tasks/docker_setup.yml fo
                 ||----w |
                 ||     ||
 
-changed: [18.199.160.40]
+changed: [jenkins_agent]
  __________________________________
 < TASK [Install required packages] >
  ----------------------------------
@@ -56,7 +56,7 @@ changed: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-ok: [18.199.160.40]
+ok: [jenkins_agent]
  ________________________________________
 < TASK [Create Docker GPG key directory] >
  ----------------------------------------
@@ -66,7 +66,7 @@ ok: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-changed: [18.199.160.40]
+ok: [jenkins_agent]
  ________________________________
 < TASK [Download Docker GPG key] >
  --------------------------------
@@ -79,7 +79,7 @@ changed: [18.199.160.40]
 [WARNING]: Module remote_tmp /root/.ansible/tmp did not exist and was created
 with a mode of 0700, this may cause issues when running as another user. To
 avoid this, create the remote_tmp dir with the correct permissions manually
-changed: [18.199.160.40]
+changed: [jenkins_agent]
  ______________________________________________________
 < TASK [Ensure Docker GPG key has correct permissions] >
  ------------------------------------------------------
@@ -89,7 +89,7 @@ changed: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-ok: [18.199.160.40]
+ok: [jenkins_agent]
  ______________________________
 < TASK [Add Docker repository] >
  ------------------------------
@@ -99,7 +99,7 @@ ok: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-changed: [18.199.160.40]
+changed: [jenkins_agent]
  _______________________________________
 < TASK [Update APT package index again] >
  ---------------------------------------
@@ -109,7 +109,7 @@ changed: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-changed: [18.199.160.40]
+changed: [jenkins_agent]
  ________________________________
 < TASK [Install Docker packages] >
  --------------------------------
@@ -119,7 +119,7 @@ changed: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-changed: [18.199.160.40]
+changed: [jenkins_agent]
  ________________________________________
 < TASK [Start and enable Docker service] >
  ----------------------------------------
@@ -129,7 +129,7 @@ changed: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-ok: [18.199.160.40]
+ok: [jenkins_agent]
  __________________________________
 < TASK [Add users to docker group] >
  ----------------------------------
@@ -139,8 +139,8 @@ ok: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-changed: [18.199.160.40] => (item=ubuntu)
-changed: [18.199.160.40] => (item=jenkins)
+changed: [jenkins_agent] => (item=ubuntu)
+changed: [jenkins_agent] => (item=jenkins)
  ___________________________
 < TASK [Install OpenJDK 17] >
  ---------------------------
@@ -150,7 +150,7 @@ changed: [18.199.160.40] => (item=jenkins)
                 ||----w |
                 ||     ||
 
-changed: [18.199.160.40]
+changed: [jenkins_agent]
  ____________
 < PLAY RECAP >
  ------------
@@ -160,5 +160,5 @@ changed: [18.199.160.40]
                 ||----w |
                 ||     ||
 
-18.199.160.40              : ok=14   changed=9    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+jenkins_agent              : ok=14   changed=8    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 

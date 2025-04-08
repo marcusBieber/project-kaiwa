@@ -1,5 +1,5 @@
 ---
-# tasks/docker_setup.yml
+# include_tasks: tasks/docker_setup.yml - als task im Playbook zum Ausführen
 - name: Update APT package index
   apt:
     update_cache: yes

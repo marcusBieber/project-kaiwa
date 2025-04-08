@@ -6,16 +6,15 @@
     - name: Warte bis SSH erreichbar ist
       ansible.builtin.wait_for:
         port: 22
-        host: "{{ inventory_hostname }}"
-        timeout: 60  # Wartezeit (Sekunden)
-        delay: 8   # Erste Prüfung nach 10 Sekunden
+        host: "{{ hostvars[inventory_hostname].ansible_host | default(inventory_hostname) }}"
+        timeout: 60
+        delay: 8
       delegate_to: localhost
 
-    - name: write all hosts to the list of known hosts
-      ansible.builtin.shell: ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts
+    - name: Füge Host zur known_hosts-Datei hinzu
+      ansible.builtin.shell: ssh-keyscan -H {{ hostvars[inventory_hostname].ansible_host | default(inventory_hostname) }} >> ~/.ssh/known_hosts
       delegate_to: localhost
-      run_once: false # run on each host
+      run_once: false
 
     - name: ping all hosts
       ansible.builtin.ping:
-      

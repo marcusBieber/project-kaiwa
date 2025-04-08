@@ -1,0 +1,8 @@
+---
+- name: Node Exporter auf allen Hosts installieren
+  hosts: all
+  become: true
+  tasks:
+    - name: Node Exporter installieren
+      include_tasks: tasks/install_node_exporter.yml
+      when: ansible_os_family == "Debian"

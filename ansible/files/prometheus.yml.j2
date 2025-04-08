@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+{% for host in groups['all'] %}
+  - job_name: '{{ host }}'
+    static_configs:
+      - targets:
+{% if 'app_ec2' in group_names and inventory_hostname == host %}
+          - 'localhost:9100'
+{% else %}
+          - '{{ hostvars[host].ansible_host }}:9100'
+{% endif %}
+        labels:
+{% if host == 'app_ec2' %}
+          env: dev
+          role: app_server
+{% elif host == 'docker_app_ec2' %}
+          env: prod
+          role: app_server
+{% elif host == 'jenkins' %}
+          role: jenkins_master
+{% elif host == 'jenkins_docker_node' %}
+          role: jenkins_agent
+{% endif %}
+{% endfor %}

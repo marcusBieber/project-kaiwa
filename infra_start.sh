@@ -63,16 +63,16 @@ fi
 echo -e "\n📝 Erstelle neue Ansible Inventory-Datei..."
 cat <<EOF > $INVENTORY_FILE
 [jenkins]
-$JENKINS_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+jenkins_master ansible_host=$JENKINS_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [jenkins_docker_node]
-$JENKINS_DOCKER_NODE_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+jenkins_agent ansible_host=$JENKINS_DOCKER_NODE_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [app_ec2]
-$APP_EC2_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+app_server_dev ansible_host=$APP_EC2_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [docker_app_ec2]
-$DOCKER_APP_EC2_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+app_server_prod ansible_host=$DOCKER_APP_EC2_IP ansible_ssh_user=$USERNAME ansible_ssh_private_key_file=$PRIVATE_KEY ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3

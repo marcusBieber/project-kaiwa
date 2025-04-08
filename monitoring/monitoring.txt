@@ -1,0 +1,4 @@
+Das Monitoring für das Setup habe ich ein wenig zusammen gehackt.
+Da dieses Setup das Kontingent der AWS-Sandbox sehr schnell aufbraucht, habe ich vermieden, 
+eine weitere Instanz hochzufahren. Den node_exporter habe ich per Ansible auf allen Instanzen nachträglich installiert.
+Grafana habe ich über einen Free-Account in der Cloud genutzt
