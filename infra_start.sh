@@ -4,6 +4,8 @@
 # 31.03.2025
 # Author: Marcus Bieber
 
+
+
 # Nutzen von absoluten Pfaden
 # und um Probleme mit relativen Pfaden zu vermeiden
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
