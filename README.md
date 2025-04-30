@@ -1,21 +1,23 @@
 # project-kaiwa
 
-# Abschlussprojekt – DevOps- und Cloud Engineering (README ist noch in Bearbeitung 22.04.25)
+![Logo](frontend/public/kaiwaLogo.png)
 
-Im Rahmen meiner Weiterbildung zum **Dev/Ops- und Cloud Engineer** bei der Techstarter GmbH (15.04.2024 – 09.04.2025) habe ich zusammen mit 2 Kurs-Teilnehmern, während eines Gruppen-Projekts eine eigene Chat-App mit React und Socket.io entwickelt, die über eine WebSocket-Verbindung kommuniziert. Das Projekt wurde in einem Scrum-Prozess aufgebaut und nutzt React, Socket.io, Express.js, SQLite und Nginx auf einer AWS EC2-Instanz. Mein Schwerpunkt lag auf der Umsetzung der Business-Logik, der Integration der WebSocket-Kommunikation, dem Aufbau des Express-Servers sowie der Nginx-Konfiguration und dem Deployment.
+## Abschlussprojekt – Experte für Cloud- und Webentwicklung (README ist noch in Bearbeitung stand 29.04.25)
 
-Im Rahmen meines Abschlussprojekts habe ich die bestehende App weiterentwickelt und um moderne DevOps-Komponenten erweitert. Dazu gehören:
-- ein vollständiges **automatisches Deployment mit Containerisierung, Terraform und Ansible**.
-- eine automatisierte **CI/CD-Pipeline mit Jenkins**,
-- sowie ein umfassendes **Monitoring mit Prometheus und Grafana**,
+Im Rahmen meiner Weiterbildung zum **Experten für Cloud- und Webentwicklung** bei der Techstarter GmbH (15.04.2024 – 09.04.2025) habe ich zusammen mit 2 Kurs-Teilnehmern, während eines Gruppen-Projekts nach den ersten 6 Monaten der Weiterbildung, eine eigene Chat-App mit React und Socket.io entwickelt, die über eine WebSocket-Verbindung kommuniziert. Das Projekt wurde in einem Scrum-Prozess aufgebaut und nutzt React, Socket.io, Express.js, SQLite und Nginx auf einer AWS EC2-Instanz. Mein Schwerpunkt lag auf der Umsetzung der Business-Logik, der Integration der WebSocket-Kommunikation, dem Aufbau des Express-Servers sowie der Nginx-Konfiguration und dem Deployment.
 
-Das Projekt zielt darauf ab, ein realitätsnahes Setup für den professionellen Einsatz zu gestalten. Dabei war mir besonders wichtig, dass alle Prozesse automatisiert, reproduzierbar und verständlich dokumentiert sind. Die Infrastruktur besteht aus einer Dev- und einer Prod-Umgebung. Für das Infrastruktur-Setup habe ich Terraform eingesetzt. Ansible kommt für die Provisionierung und Konfiguration der Systeme zum Einsatz.
+![Screenshots](frontend/public/login.png)
+![Screenshots](frontend/public/app.png)
 
-Ein zentraler Fokus liegt auf der Frage, wie Tools wie **Terraform, Jenkins und Ansible sinnvoll zusammenarbeiten** – nicht nur als Einzelkomponenten, sondern als integriertes, robustes System. Dabei wurde das komplette Setup so aufgebaut, dass es von Grund auf automatisiert ist: von der Jenkins-Installation bis zum finalen Deployment der containerisierten Applikation.
+Im Rahmen meines Abschlussprojekts habe ich die bestehende App optimiert und weiterentwickelt. Ich habe Fehler bereinigt, die mir zum Zeitpunkt der Entwicklung noch nicht bewusst waren, und habe sie um Software-Testing, Monitoringum und moderne DevOps-Komponenten erweitert.
 
-Die CI/CD-Pipeline ist dabei so aufgebaut, dass beim Push in den Dev-Branch die App getestet, gebaut und direkt deployed wird. Beim Push in den Main-Branch erfolgt zusätzlich ein containerisiertes Deployment über Docker Hub und Docker Compose. Die Erreichbarkeit der App wird nach jedem Schritt automatisch geprüft.
+Das Projekt zielt darauf ab, ein realitätsnahes Setup für den professionellen Einsatz zu gestalten. Dabei war mir besonders wichtig, dass möglichst viele Prozesse automatisiert und reproduzierbar sind. Die Infrastruktur besteht aus einer Dev- und einer Prod-Umgebung. Für das Infrastruktur-Setup habe ich Terraform eingesetzt. Ansible kommt für die Konfiguration der Systeme zum Einsatz.
 
-Auch das Monitoring wurde so einfach und effektiv wie möglich umgesetzt. Prometheus läuft auf einer der App-Instanzen, Grafana im Docker-Container, und der Node Exporter auf allen Hosts. Zusätzlich sendet der Express-Server Metriken via `prom-client` – z. B. wie viele Nutzer gerade angemeldet sind, wie viele sich jemals angemeldet haben, wie viele Nachrichten versendet wurden und wie viele davon in der letzten Stunde. Auch Jenkins ist ins Monitoring eingebunden.
+Ein zentraler Fokus liegt auf der Frage, wie Tools wie **Terraform, Jenkins und Ansible sinnvoll zusammenarbeiten** – nicht nur als Einzelkomponenten, sondern als integriertes, robustes System, von der Jenkins-Installation bis zum finalen Deployment der containerisierten Applikation.
+
+Die CI/CD-Pipeline ist dabei so aufgebaut, dass beim Push in den Dev-Branch die App getestet, gebaut und direkt mit Nginx auf einer virtuellen Instanz deployed wird. Beim Push in den Main-Branch erfolgt zusätzlich ein containerisiertes Deployment über Docker Hub und Docker Compose. Die Erreichbarkeit der App wird in jedem Fall automatisch geprüft.
+
+Auch das Monitoring wurde so einfach und effektiv wie möglich umgesetzt. Prometheus läuft auf einer der App-Instanzen, Grafana in der Cloud und der Node Exporter auf allen Hosts. Zusätzlich sendet der Express-Server Metriken via `prom-client` – z. B. wie viele Nutzer gerade angemeldet sind, wie viele sich jemals angemeldet haben, wie viele Nachrichten versendet wurden und wie viele davon in der letzten Stunde. Auch Jenkins ist ins Monitoring eingebunden.
 
 Das komplette Projekt ist so dokumentiert, dass es leicht auf anderen Systemen wiederverwendet werden kann. Der Fokus liegt auf realistischen, produktionsnahen Szenarien – genau so, wie ich sie später auch im Berufsleben umsetzen möchte.
 
@@ -29,8 +31,10 @@ Das komplette Projekt ist so dokumentiert, dass es leicht auf anderen Systemen w
 - Einführung von **Containerisierung** für Produktionsumgebungen
 - Trennung von **Dev- und Prod-Umgebungen**
 - Implementierung eines **Monitoring-Stacks** mit Prometheus und Grafana
-- Nutzung von **Infrastructure as Code** (Terraform, Ansible)
-- Einrichtung einer produktionsnahen Infrastruktur auf AWS und Azure
+- Nutzung von **Infrastructure as Code** (Terraform)
+- **Automatisierte Konfiguration der Infrastruktur** (Ansible)
+- **Automatisiertes Setup** mit Bash-Skripten
+- Einrichtung einer produktionsnahen Infrastruktur auf AWS (nachträglich auch auf Microsoft Azure)
 
 ---
 
@@ -41,10 +45,10 @@ Die Architektur besteht aus mehreren virtuellen Maschinen in der Cloud, die unte
 | Komponente          | Beschreibung                                                                 |
 |---------------------|------------------------------------------------------------------------------|
 | Jenkins-Server      | Führt alle CI/CD-Prozesse aus                                                |
-| Jenkins-Node        | Unterstützt Jenkins bei Build- und Deploymentprozessen                       |
-| EC2 Dev             | Direkter Deployment-Host für die Entwicklungsumgebung                        |
-| EC2 Prod            | Containerisiertes Deployment über Docker Compose                             |
-| Monitoring-Server   | Läuft auf App-EC2, beherbergt Prometheus und Grafana                         |
+| Jenkins-Docker-Node | Unterstützt Jenkins bei Build- und Deploymentprozessen                       |
+| App-EC2             | Direkter Deployment-Host für die Entwicklungsumgebung                        |
+| Docker-App-EC2      | Containerisiertes Deployment über Docker Compose                             |
+| Monitoring-Server   | Läuft auf App-EC2, beherbergt Prometheus                                     |
 
 Weitere Bestandteile:
 
