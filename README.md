@@ -9,7 +9,7 @@ Im Rahmen meiner Weiterbildung zum **Experten für Cloud- und Webentwicklung** b
 ![Screenshots](frontend/public/login.png)
 ![Screenshots](frontend/public/app.png)
 
-Im Rahmen meines Abschlussprojekts habe ich die bestehende App optimiert und weiterentwickelt. Ich habe Fehler bereinigt, die mir zum Zeitpunkt der Entwicklung noch nicht bewusst waren, und habe sie um Software-Testing, Monitoringum und moderne DevOps-Komponenten erweitert.
+Im Rahmen meines Abschlussprojekts habe ich die bestehende App optimiert und weiterentwickelt. Ich habe Fehler bereinigt, die mir zum Zeitpunkt der Entwicklung noch nicht bewusst waren, und habe sie um Software-Testing, Monitoring und moderne DevOps-Komponenten erweitert.
 
 Das Projekt zielt darauf ab, ein realitätsnahes Setup für den professionellen Einsatz zu gestalten. Dabei war mir besonders wichtig, dass möglichst viele Prozesse automatisiert und reproduzierbar sind. Die Infrastruktur besteht aus einer Dev- und einer Prod-Umgebung. Für das Infrastruktur-Setup habe ich Terraform eingesetzt. Ansible kommt für die Konfiguration der Systeme zum Einsatz.
 
