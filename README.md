@@ -15,12 +15,9 @@ Das Projekt zielt darauf ab, ein realitätsnahes Setup für den professionellen 
 
 Ein zentraler Fokus liegt auf der Frage, wie Tools wie **Terraform, Jenkins und Ansible sinnvoll zusammenarbeiten** – nicht nur als Einzelkomponenten, sondern als integriertes, robustes System, von der Jenkins-Installation bis zum finalen Deployment der containerisierten Applikation.
 
-Die CI/CD-Pipeline ist dabei so aufgebaut, dass beim Push in den Dev-Branch die App getestet, gebaut und direkt mit Nginx auf einer virtuellen Instanz deployed wird. Beim Push in den Main-Branch erfolgt zusätzlich ein containerisiertes Deployment über Docker Hub und Docker Compose. Die Erreichbarkeit der App wird in jedem Fall automatisch geprüft.
+Die CI/CD-Pipeline ist dabei so aufgebaut, dass beim Push in den Dev-Branch Unit- und Integrationstests für Front- und Backend durchgeführt werden. Die App wird gebaut und direkt mit Nginx auf einer virtuellen Instanz deployed. Beim Push in den Main-Branch erfolgt ein containerisiertes Deployment über Docker Hub und Docker Compose. Die Erreichbarkeit der App wird in beiden Fällen automatisch geprüft.
 
 Auch das Monitoring wurde so einfach und effektiv wie möglich umgesetzt. Prometheus läuft auf einer der App-Instanzen, Grafana in der Cloud und der Node Exporter auf allen Hosts. Zusätzlich sendet der Express-Server Metriken via `prom-client` – z. B. wie viele Nutzer gerade angemeldet sind, wie viele sich jemals angemeldet haben, wie viele Nachrichten versendet wurden und wie viele davon in der letzten Stunde. Auch Jenkins ist ins Monitoring eingebunden.
-
-Das komplette Projekt ist so dokumentiert, dass es leicht auf anderen Systemen wiederverwendet werden kann. Der Fokus liegt auf realistischen, produktionsnahen Szenarien – genau so, wie ich sie später auch im Berufsleben umsetzen möchte.
-
 
 ---
 
@@ -44,11 +41,11 @@ Die Architektur besteht aus mehreren virtuellen Maschinen in der Cloud, die unte
 
 | Komponente          | Beschreibung                                                                 |
 |---------------------|------------------------------------------------------------------------------|
-| Jenkins-Server      | Führt alle CI/CD-Prozesse aus                                                |
-| Jenkins-Docker-Node | Unterstützt Jenkins bei Build- und Deploymentprozessen                       |
-| App-EC2             | Direkter Deployment-Host für die Entwicklungsumgebung                        |
-| Docker-App-EC2      | Containerisiertes Deployment über Docker Compose                             |
-| Monitoring-Server   | Läuft auf App-EC2, beherbergt Prometheus                                     |
+| Jenkins-Server      | Führt CI/CD-Prozesse aus                                                     |
+| Jenkins-Agent       | Unterstützt Jenkins bei Build- und Deploymentprozessen                       |
+| App-Server-Dev      | Direkter Deployment-Host für die Entwicklungsumgebung                        |
+| App-Server-Prod     | Containerisiertes Deployment über Docker Compose                             |
+| Monitoring-Server   | Läuft auf App-Dev, beherbergt Prometheus, Grafana wird in der Cloud genutzt  |
 
 Weitere Bestandteile:
 
@@ -60,6 +57,114 @@ Weitere Bestandteile:
 
 ---
 
+## Terraform
+
+Die Infrastruktur für dieses Projekt wurde in erster Linie mit AWS als Cloud Provider realisiert, ich habe aber auch ein Skript für Microsoft Azure erstellt.
+
+### AWS-Komponenten
+
+- **Key-Pair** für sichere SSH Verbindung mit allen Instanzen
+  - Private-Key wird lokal in ~/.ssh gespeichert mit korrekten permissions
+- **Jenkins-Sicherheitsgruppe**
+  - Port 22 Ingress (SSH)
+  - Port 8080 Ingress (Jenkins)
+- **Web-Sicherheitsgruppe**
+  - Port 22 Ingress (SSH)
+  - Port 80 Ingress (HTTP)
+- **2 Jenkins-Instanzen** (EC2)
+  - Ubuntu-Server (ami)
+  - t3.large (instance type)
+  - Jenkins-Sicherheitsgruppe
+- **2 Web-Instanzen** (EC2)
+  - Ubuntu-Server (ami)
+  - t2.micro (instance type)
+  - Web-Sicherheitsgruppe
+- **Terraform-Outputs**
+  - Public-IP's der Jenkins-Instanzen
+  - Public-IP's der Web-Instanzen
+  - Pfad zum Private-Key
+
+### Azure-Komponenten
+
+Für das selbe Setup müssen bei Azure als Cloud Provider wesentlich mehr Komponenten in Terraform beschrieben werden
+- **Ressourcen-Gruppe** (bestehend oder neu)
+- **Key-Pair** für sichere SSH Verbindung mit allen Instanzen
+  - Private-Key wird lokal in ~/.ssh gespeichert mit korrekten permissions
+- **Virtuell-Network** 
+  - 10.0.0.0/16 (address space)
+- **Subnet**
+  - 10.0.1.0/24 (address prefixes)
+- **Jenkins-Sicherheitsgruppe**
+  - Port 22 Inbound (SSH)
+  - Port 8080 Inbound (Jenkins)
+  - Port 9100 Inbound (Monitoring - Node Exporter)
+- **Web-Sicherheitsgruppe**
+  - Port 22 Inbound (SSH)
+  - Port 80 Inbound (HTTP)
+  - Port 9090 Inbound (Monitoring - Prometheus)
+  - Port 9100 Inbound (Monitoring - Node Exporter)
+  - Port 3001 Inbound (Monitoring - Prom-Client)
+- **Public IP's**
+  - Static
+- **Network Interface - nic**
+  - Für jede Instanz
+- **Network Interface Securitygroup Association - Jenkins**
+  - Verbinden der Network Interfaces mit Sicherheitsgruppe als extra Ressource
+- **Network Interface Securitygroup Association - Web**
+  - Verbinden der Network Interfaces mit Sicherheitsgruppe als extra Ressource
+- **2 Azure VM's Jenkins**
+  - Ubuntu-Server-Jammy
+  - Size Standart_B1s (zu klein für Jenkins)
+  - Weitere Einstellungen (siehe main.tf)
+- **2 Azure VM's Web**
+  - Ubuntu-Server-Jammy
+  - Size Standart_B1s
+  - Weitere Einstellungen (siehe main.tf)
+- **Terraform-Outputs**
+  - Public-IP's der Jenkins-Instanzen
+  - Public-IP's der Web-Instanzen
+  - Pfad zum Private-Key
+
+---
+
+## Ansible
+
+Nachdem Terraform die Infrastruktur erstellt hat, kann mit Ansible zunächst die Verbindung zu allen Instanzen, mit dem Playbook `check_connenction.yml`, überprüft werden. Wenn Ansible eine stabile Verbindung zu allen Instanzen hat, kann mit der Konfiguration der Instanzen begonnen werden.
+
+### Jenkins Server
+- **jenkins.yml**
+  - Rollenbasierte Installation von Java & Jenkins (geerlingguy.java, geerlingguy.jenkins)
+  - Installiert benötigte Plugins:
+    - workflow-aggregator
+    - pipeline-stage-view
+    - ssh-agent
+    - github
+    - nodejs
+    - prometheus-metrics-plugin (nicht zuverlässig, muss manuell nachinstalliert werden)
+  - Lädt Jenkins-CLI herunter
+  - Konfiguriert NodeJS Plugin
+  - Erstellt Pipeline-Job mit Jenkins-CLI mit Referenz zum GitHub Repository
+  - fügt den SSH-Key aus den Terraform Outputs als Credentials in Jenkins hinzu
+    für Zugriff auf die Instanzen
+
+### Jenkins Agent
+- **jenkins_docker_node.yml**
+  - Installiert Java um als Jenkins Agent fungieren zu können
+  - Installiert Docker um Docker Prozesse ausführen zu können
+  - Fügt User Ubuntu & Jenkins der Gruppe Docker hinzu
+
+### App Server Dev
+- **app_ec2.yml**
+  - Installiert Nginx und richtet es als Service ein
+  - Installiert NodeJS
+  - Installiert PM2 und richtet es als Service ein
+
+### App Server Prod
+- Installiert Docker 
+- Fügt User Ubuntu & Jenkins zu Gruppe Docker hinzu
+
+---
+
 ## CI/CD-Pipeline im Überblick
 
 Die CI/CD-Pipeline ist branch-basiert aufgebaut:
@@ -68,21 +173,27 @@ Die CI/CD-Pipeline ist branch-basiert aufgebaut:
 
 - Trigger: Push auf `dev`
 - Schritte:
-  1. Testausführung (API, Socket.io)
-  2. Build der App
-  3. Deployment auf die Dev-Instanz (EC2, ohne Container)
-  4. Erreichbarkeitsprüfung
+  1. Klonen des Repositorys
+  2. Testausführung (API, Socket.io, Datenbank)
+  3. Testausführung (Frontend Komponenten)
+  4. Build der App
+  5. Deployment des Backends auf die App-Instanz (mit PM2)
+  6. Deployment des Frontends auf die App-Instanz (mit Nginx)
+  7. Erreichbarkeitsprüfung
 
 ### Main-Branch (Production)
 
 - Trigger: Push auf `main`
 - Schritte:
-  1. Testausführung (wie oben)
-  2. Build
-  3. Containerisierung der App
-  4. Push zu Docker Hub
-  5. Deployment per `docker-compose` auf Prod-Instanz
-  6. Erreichbarkeitsprüfung
+  1. Klonen des Repositorys
+  2. Testausführung (API, Socket.io, Datenbank)
+  3. Testausführung (Frontend Komponenten)
+  4. Build Backend Container-Image (Docker)
+  5. Build Frontend Container-Image (Multi-Stage-Build)
+  6. Push zu Docker Hub (Frontend- und Backend-Image)
+  7. Kopieren der Docker-Compose-File auf die Docker-App-Instanz
+  8. Deployment per `docker compose` auf Docker-App-Instanz
+  9. Erreichbarkeitsprüfung
 
 ---
 
