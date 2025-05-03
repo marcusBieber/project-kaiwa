@@ -265,9 +265,9 @@ Eine detaillierte Anleitung zur Inbetriebnahme (inkl. Terraform, Ansible, Jenkin
 
 ---
 
-> Das vollständige Projekt inkl. Code findest du im Repository:
-> 👉 [GitHub: Kaiwa Chat-App mit DevOps-Pipeline](https://github.com/marcusBieber/Kaiwa)
+// >das vollständige Projekt inkl. Code findest du im Repository:
+// > 👉 [GitHub: Kaiwa Chat-App mit DevOps-Pipeline](https://github.com/marcusBieber/Kaiwa)
 
 ---
 
-Möchtest du jetzt, dass ich direkt den nächsten Teil – die **technische Anleitung zur Ausführung** – in diesem Stil fertig schreibe?
+
