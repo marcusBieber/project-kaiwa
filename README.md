@@ -160,8 +160,54 @@ Nachdem Terraform die Infrastruktur erstellt hat, kann mit Ansible zunächst die
   - Installiert PM2 und richtet es als Service ein
 
 ### App Server Prod
-- Installiert Docker 
-- Fügt User Ubuntu & Jenkins zu Gruppe Docker hinzu
+- **docker_app_ec2.yml**
+  - Installiert Docker 
+  - Fügt User Ubuntu & Jenkins zu Gruppe Docker hinzu
+
+### Weitere Playbooks
+- **check_connection.yml**
+  - Fügt alle Hosts aus dem Inventory lokal zu known_hosts hinzu
+  - Prüft die Erreichbarkeit zu allen Hosts
+- **node_exporter.yml**
+  - Installiert Node Exporter 
+  - Richtet Node Exporter als Service ein
+- **install_prometheus.yml**
+  - Lädt Prometheus Binärdateien herunter
+  - Erstellt einen Dienst für Prometheus
+  - Konfiguriert prometheus.yml mit allen Hosts aus dem Ansible-Inventory
+
+---
+
+## Automatisierung durch Bash-Skripte
+
+Bei der Arbeit an diesem Projekt, war eines meiner Ziele Reproduzierbarkeit. Für spätere Teilnehmer von Techstarter, oder einfach Interessierte, sollte dieses Projekt einfach nachzumachen und nachzuvollziehen sein. Wenn die Vorraussetzungen erfüllt sind, erledigen die Skripte fast die gesamte Arbeit bis auf ein paar wenige manuelle Eingriffe.
+
+### Starten der Infrastruktur
+- **infra_start.sh**
+  - Initialisieren und starten des Terraform Deployments mit Prüfung ob Deployment bereits vorhanden ist
+  - Abrufen der Terraform Ouputs:
+    - Jenkins IP's
+    - Web IP's
+    - Private Key Pfad
+    - Public Key Name
+  - Speichern der Outputs in Variablen
+  - Erstellen der Ansible Konfigurationsdateien "inventory.ini" & "ansible.cfg"
+  - Ansible Testlauf, starten des Playbooks "check_connection.yml"
+  - Ausgabe von konfigurierten SSH-Befehlen und URL's für manuelles Verbinden zu den Instanzen bzw. Aufrufen im Browser
+  - Bedingtes Starten von "install.sh"
+
+- **install.sh**
+  - Erstellen bzw. Bereinigen des "logs"-Verzeichnisses
+  - Parralleles Starten der Playbooks `jenkins.yml`, `jenkins_docker_node.yml`, `app_ec2.yml` und `docker_app_ec2.yml`
+  - Erstellen von Logs für die Playbooks
+  - Prüfen der Logs auf Fehler während der Plays
+  - Ausgabe eventueller Fehler
+
+### Stoppen der Infrastruktur
+- **infra_down.sh**
+  - Exportieren der HOME-Variable
+  - Ausgabe der bestehenden Infrastruktur
+  - Bedingtes Löschen der Infrastruktur
 
 ---
 
