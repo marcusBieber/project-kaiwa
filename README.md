@@ -245,10 +245,11 @@ Die CI/CD-Pipeline ist branch-basiert aufgebaut:
 
 ## Monitoring
 
+Das Monitoring habe ich erst zum Ende der Projektzeit hinzugefügt weil ich noch etwas Zeit hatte. Nachdem die Ansible-Playbooks `node_exporter.yml` & `install_prometheus.yml` gelaufen sind und Prometheus mit Grafana verbunden wurde, besteht zu allen Instanzen eine Verbindung. Was genau von Grafana angezeigt werden soll, muss aber noch konfiguriert werden.
 Der Monitoring-Stack besteht aus:
 
 - **Prometheus** (läuft auf App-EC2)
-- **Grafana** (Docker-Container)
+- **Grafana** (Grafana Cloud)
 - **Node Exporter** (auf allen relevanten Instanzen)
 - **Jenkins Prometheus Plugin** für CI/CD-bezogene Metriken
 - **Express.js eigene Metriken**:
@@ -259,15 +260,16 @@ Der Monitoring-Stack besteht aus:
 
 ---
 
+>Sieh dir gern meine Google Präsentation an:
+> 👉 [Project Kaiwa](https://docs.google.com/presentation/d/e/2PACX-1vSm0Kg5jLs5to9xFOJKOS9H2HNy4TCm1ai1D6UERQufaIm7sC-3N0-JYvf-1cmbKD8QCVYJDV7bxV8G/pub?start=false&loop=false&delayms=3000)
+
+---
+
 ## Anleitung zur Ausführung
 
-Eine detaillierte Anleitung zur Inbetriebnahme (inkl. Terraform, Ansible, Jenkins, Deployment, Monitoring) folgt im unteren Teil der README – mit klaren Schritten zur Reproduktion auf eigener Infrastruktur oder in der Cloud.
+Eine detaillierte Anleitung zur Inbetriebnahme (inkl. Terraform, Ansible, Jenkins, Deployment, Monitoring) folgt im unteren Teil der README – mit klaren Schritten zur Reproduktion auf eigener Infrastruktur oder in der Cloud. (ist noch in Arbeit und kommt später)
 
 ---
 
-// >das vollständige Projekt inkl. Code findest du im Repository:
-// > 👉 [GitHub: Kaiwa Chat-App mit DevOps-Pipeline](https://github.com/marcusBieber/Kaiwa)
-
----
 
 
